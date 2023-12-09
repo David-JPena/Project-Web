@@ -7,24 +7,33 @@ const serviceSchema = new Schema({
         type: String,
         require: true
     },
+    
     description: {
         type: String,
         require: true
     },
 
-    categories: { type: String, enum: ['Desayuno', 'Almuerzo', 'Cena', 'Vegetariana', 'Postres'], required: true },
+    categories: {
+        type: String,
+        enum: ['Desayuno', 'Almuerzo', 'Cena', 'Vegetariana', 'Postres'],
+        required: true
+    },
+    
     ingredients: {
         type: [String], 
         required: true 
-        },
+    },
+    
     steps: { 
-            type: [String], 
-            required: true 
-        },
+        type: [String], 
+        required: true 
+    },
+    
     image: {
         type: String,
         require: true
     },
+
     publicationDate: {
         type: Date,
         required: true,

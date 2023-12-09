@@ -1,35 +1,25 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
+const express = require('express');
 const app = express();
-const path = require('path');
+const connectDB = require('./src/config/db');
+//const userRoutes = require('./src/routes/userRoutes');
+const cors = require('cors');
 
-// Configuración de CORS
-const corsOptions = {
-    origin: 'http://localhost:4200',
-    optionsSuccessStatus: 200
-};
+// Manejo de errores en connectDB
+try {
+    connectDB();
+} catch (error) {
+    console.error(`Error connecting to MongoDB: ${error.message}`);
+    process.exit(1);
+}
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
-// Ruta al directorio donde se almacenan las imágenes
-const uploadsPath = path.join(__dirname, 'uploads');
+const routes = require("./src/routes/router");
+app.use("/api", routes);
 
-// Configuración para servir archivos estáticos desde la ruta /uploads
-app.use('/uploads', express.static(uploadsPath));
-
-// Conexión a MongoDB
-const connectDB = require('./src/config/db');
-connectDB();
-
-// Rutas de Usuario
-const userRoutes = require('./src/routes/userRoutes');
-app.use('/api/users', userRoutes);
-
-// Rutas de Servicios
-const serviceRouter = require('./src/routes/serviceRouter');
-app.use('/api/services', serviceRouter);
+// Rutas de usuario
+//app.use('/api', userRoutes);
 
 // Manejo de errores 404
 app.use((req, res) => {
@@ -39,10 +29,5 @@ app.use((req, res) => {
 const PORT = 3000;
 
 app.listen(PORT, () => {
-    console.log(`Servidor en línea en el puerto ${PORT}`);
-});
-
-app.use((req, res, next) => {
-    console.log('Request:', req.url);
-    next();
+    console.log(`Server corriendo en el puerto ${PORT}`);
 });
