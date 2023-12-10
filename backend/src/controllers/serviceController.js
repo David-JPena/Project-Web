@@ -54,7 +54,7 @@ const services = {
             return res.status(404).json({ msg: "Servicio no encontrado." });
         }
 
-        const imagePath = path.join(__dirname, "../uploads", service.image);
+        const imagePath = path.join(__dirname, "../../uploads", service.image);
 
         // Elimina la imagen del sistema de archivos
         await fs.unlink(imagePath);

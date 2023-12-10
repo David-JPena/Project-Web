@@ -7,6 +7,10 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { PrivateComponent } from './components/private/private.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
+import { AddComponent } from './components/add/add.component';
+import { ListComponent } from './components/list/list.component';
+import { EditComponent } from './components/edit/edit.component';
+import { DetailsComponent } from './components/details/details.component';
 
 const routes: Routes = [
   {
@@ -30,6 +34,23 @@ const routes: Routes = [
   {
     path: 'signin',
     component: SigninComponent
+  },
+  {
+    path: 'add',
+    component: AddComponent
+  },
+  {
+    path: 'list',
+    component: ListComponent
+
+  },
+  {
+    path: 'edit/:id',
+    component: EditComponent
+  },
+  {
+    path: 'details/:id',
+    component: DetailsComponent
   }
 ];
 

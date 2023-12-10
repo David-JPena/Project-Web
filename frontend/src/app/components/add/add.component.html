@@ -1,0 +1,60 @@
+<!-- form.component.html -->
+<div>
+    <h2>Formulario de Servicio</h2>
+    <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <div>
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" [(ngModel)]="formData.name" name="name" required>
+      </div>
+      <div>
+        <label for="description">Descripción:</label>
+        <textarea id="description" [(ngModel)]="formData.description" name="description" required></textarea>
+      </div>
+      <div>
+        <label for="ingredients">Ingredientes:</label>
+        <div id="ingredientes-container">
+          <input type="text" [(ngModel)]="nuevoIngrediente" name="ingredients" required>
+          <button type="button" (click)="agregarIngrediente()">Agregar Ingrediente</button>
+        </div>
+        <div *ngFor="let ingrediente of formData.ingredients; let i = index">
+          <div>
+            <span>{{ i + 1 }}. </span>
+            <span>{{ ingrediente }}</span>
+            <button type="button" (click)="eliminarIngrediente(i)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+  
+      <div>
+        <label for="steps">Pasos:</label>
+        <div id="pasos-container">
+          <input type="text" [(ngModel)]="nuevoPaso" name="steps" required>
+          <button type="button" (click)="agregarPaso()">Agregar Paso</button>
+        </div>
+        <div *ngFor="let paso of formData.steps; let i = index">
+          <div>
+            <span>{{ i + 1 }}. </span>
+            <span>{{ paso }}</span>
+            <button type="button" (click)="eliminarPaso(i)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+  
+      <div>
+        <div>
+          <label for="categories">Categorias:</label>
+          <select id="categories" [(ngModel)]="formData.categories" name="categories" required>
+            <option *ngFor="let category of categoryOptions" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+        <label for="image">Imagen:</label>
+        <input type="file" (change)="onFileChange($event)" accept="image/*" name="file">
+      </div>
+      <div>
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+  
+    <button (click)="navigateToList()">Ir a la Lista</button>
+  </div>
+  

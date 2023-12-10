@@ -1,0 +1,37 @@
+<!-- list.component.html -->
+
+
+<div *ngFor="let service of services">
+    <div>
+      <button (click)="navigateToAdd()">Agregar</button>
+    </div>
+    <h3>{{ service.name }}</h3>
+    <p>{{ service.description }}</p>
+  
+    
+    <p>Ingredientes:</p>
+    <ul>
+      <li *ngFor="let ingredient of service.ingredients; let i = index">
+        {{ ingredient.trim() }}
+      </li>
+    </ul>
+    
+    <p>Pasos:</p>
+    <ol>
+      <li *ngFor="let step of service.steps; let i = index">
+        {{ step.trim() }}
+      </li>
+    </ol>
+  
+    <p>Categorias: {{ service.categories }}</p>
+    <img [src]="getImageUrl(service.image)" alt="Imagen del servicio">
+    
+    <button (click)="navigateToDetails(service._id)">Ver Detalles</button>
+    
+    <!-- Botón para eliminar -->
+    <button (click)="deleteService(service._id)">Eliminar</button>
+    
+    <!-- Botón para editar -->
+    <button (click)="navigateToEdit(service._id)">Editar</button>
+  </div>
+  

@@ -1,0 +1,45 @@
+<!-- details.component.html -->
+
+<div *ngIf="idServicio; else noServiceDetails">
+    <h2>Detalles del Servicio {{ idServicio }}</h2>
+  
+    <!-- Aquí puedes mostrar detalles del servicio, por ejemplo: -->
+    <!-- <p>{{ servicioDetalle.nombre }}</p> -->
+    <!-- <p>{{ servicioDetalle.descripcion }}</p> -->
+  
+    <h3>Comentarios</h3>
+  
+    <!-- Formulario para agregar comentario -->
+    <form #commentForm="ngForm" (ngSubmit)="agregarComentario()">
+      <label for="nombreUsuario">Nombre de Usuario:</label>
+      <input type="text" id="nombreUsuario" name="user" [(ngModel)]="nuevoComentario.user" required>
+  
+      <label for="textoComentario">Comentario:</label>
+      <textarea id="textoComentario" name="text" [(ngModel)]="nuevoComentario.text" required></textarea>
+  
+      <button type="submit" [disabled]="!commentForm.valid">Agregar Comentario</button>
+      <!-- En el HTML del componente Angular -->
+      
+  
+    </form>
+   <!-- En el HTML del componente Angular -->
+  
+  <!-- Resto del código... -->
+  
+  
+    <!-- Lista de comentarios -->
+    <ul>
+      <li *ngFor="let comentario of comentarios">
+        <p><strong>{{ comentario.user }}</strong>: {{ comentario.text }}</p>
+      </li>
+    </ul>
+  
+  </div>
+  <h4>{{ likes }} Me gusta</h4>
+  <button (click)="darMeGusta()">Me Gusta</button>
+  
+  
+  <ng-template #noServiceDetails>
+    <p>No se ha seleccionado ningún servicio.</p>
+  </ng-template>
+  
