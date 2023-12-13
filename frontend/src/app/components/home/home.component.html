@@ -1,3 +1,4 @@
+
 <!-- home.component.html -->
 
 <!-- Estructura HTML con Bootstrap, botón redondeado y color azul -->
@@ -10,48 +11,50 @@
 
 <!-- home.component.html -->
 
-<div class="container-fluid">
-  <div class="row">
-    <!-- Menú desplegable para seleccionar la categoría -->
+<div class="container-fluid h-100">
+  <div class="row h-100">
     <div class="col-md-3 mb-3">
-      <div class="card position-relative h-25">
+      <div class="card position-relative h-25" style="background-color: rgb(244, 249, 251);">
         <div class="card-body  position-relative">
           <h5 class="card-title">Filtrar por Categoría</h5>
-          <select class="form-control mt-2" [(ngModel)]="selectedCategory" (ngModelChange)="searchByCategory()" style="max-height: 200px; overflow-y: auto;">
+          <select class="form-control mt-2" [(ngModel)]="selectedCategory" (ngModelChange)="searchByCategory()" style="max-height: 200px; overflow-y: auto; background-color: rgb(230, 232, 232);">
             <option value="">Todas las Categorías</option>
             <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
           </select>
         </div>
       </div>
     </div>
-    
-    
 
     <div class="col-md-9">
-      <!-- Estructura HTML del buscador -->
       <div class="input-group mb-3">
         <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Buscar por nombre">
         <div class="input-group-append">
           <button class="btn btn-outline-primary rounded" (click)="search()">Buscar</button>
         </div>
       </div>
-<!-- Contenido de los servicios filtrados por categoría -->
-<div class="row row-cols-1 row-cols-md-3 g-4">
-  <div class="col" *ngFor="let service of services">
-    <div class="card h-100 card-hover">
-      <!-- Contenido de la tarjeta (card) -->
-      <img [src]="getImageUrl(service.image)" (click)="navigateToDetails(service._id)" class="card-img-top img-fluid" alt="Imagen del servicio" style="height: 300px; object-fit: cover; cursor: pointer;">
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title">{{service.name}}</h5>
-        <div class="action-icons mt-3 text-center">
-          <!-- Usa ngClass para aplicar la clase 'liked' cuando la propiedad 'liked' es verdadera -->
-          <i class="bi bi-heart-fill" (click)="addLike(service._id)" [ngClass]="{'liked': service.liked}" style="cursor: pointer;"></i>
-          <span class="ml-2">{{ service.likes }} Me gusta</span>
-          <i class="icon-save fa fa-bookmark"></i>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" *ngFor="let service of services">
+          <div class="card h-100 card-hover" style="background-color: rgb(244, 249, 251);">
+            <img [src]="getImageUrl(service.image)" (click)="navigateToDetails(service._id)" class="card-img-top img-fluid" alt="Imagen del servicio" style="height: 300px; object-fit: cover; cursor: pointer;">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{service.name}}</h5>
+              <div class="action-icons mt-3 text-center">
+                <i class="bi bi-heart-fill" (click)="toggleLike(service)" [ngClass]="{'liked': service.liked}" style="cursor: pointer;"></i>
+                <span class="ml-2">{{ service.likes }} {{ service.liked ? 'Me gusta' : '' }}</span>
+              
+                <i class="icon-save fa fa-bookmark ml-2"
+                   (click)="toggleSave(service)"
+                   [ngClass]="{'saved': service.saved, 'blue-icon': service.saved}"
+                   style="cursor: pointer;"></i>
+                <span class="ml-2">{{ service.saved ? 'Guardado' : '' }}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
-
-</div>
+<app-fooder></app-fooder>

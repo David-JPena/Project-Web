@@ -3,13 +3,23 @@
     transition: transform 0.3s ease-in-out;
   }
   
-  .card-hover:hover {
+.card-hover:hover {
     transform: scale(1.05); /* Ajusta la escala según tus necesidades */
-  }
+}
   /* Agrega esta regla en tu hoja de estilos para ajustar el ancho del campo de búsqueda */
 .search-input {
     max-width: 150px; /* Puedes ajustar el valor según tus preferencias */
-  }
-  .liked::before {
+}
+.liked::before {
     color: red !important;
-  }
+}
+.body, html {
+  height: 100%;
+  margin: 0; /* Asegura que no haya márgenes que afecten al 100% de altura */
+  overflow: hidden; /* Puedes añadir esto para evitar barras de desplazamiento, si es necesario */
+}
+/* styles.css */
+
+.blue-icon {
+  color: blue;
+}

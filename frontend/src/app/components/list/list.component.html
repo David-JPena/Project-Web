@@ -4,7 +4,7 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col" *ngFor="let service of services">
     <div class="card h-100">
-      <div class="card-body">
+      <div class="card-body" style="background-color:  rgb(244, 249, 251);">
         <img [src]="getImageUrl(service.image)" (click)="navigateToDetails(service._id)"
         class="card-img-top img-fluid" alt="Imagen del servicio" style="height: 300px; object-fit: cover;">
         <h5 class="card-title">{{service.name}}</h5>
@@ -29,7 +29,7 @@
 
      
 
-      <div class="card-footer">
+      <div class="card-footer" style="background-color: rgb(221, 225, 232);">
        
         <button class="btn btn-outline-primary" (click)="navigateToDetails(service._id)">
           Ver Detalles
@@ -44,3 +44,4 @@
     </div>
   </div>
 </div>
+<app-fooder></app-fooder>

@@ -17,6 +17,7 @@ import { EditComponent } from './components/edit/edit.component';
 import { HomeComponent } from './components/home/home.component';
 import { ListComponent } from './components/list/list.component';
 import { DetailsComponent } from './components/details/details.component';
+import { FooderComponent } from './components/fooder/fooder.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { DetailsComponent } from './components/details/details.component';
     HomeComponent,
     ListComponent,
     DetailsComponent,
+    FooderComponent,
    
   ],
   imports: [

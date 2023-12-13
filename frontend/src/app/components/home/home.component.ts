@@ -68,6 +68,14 @@ export class HomeComponent implements OnInit {
       }
     }
   }
+  toggleSave(service: any) {
+    service.saved = !service.saved;
+    // Puedes agregar la lógica necesaria para guardar o desguardar el servicio
+  }
+  toggleLike(service: any) {
+    service.liked = !service.liked;
+    service.likes += service.liked ? 1 : -1;
+  }
 
   removeLike(serviceId: string): void {
     this.apiService.removeLike(serviceId).subscribe(

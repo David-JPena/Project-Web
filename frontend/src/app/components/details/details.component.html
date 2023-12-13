@@ -88,7 +88,7 @@
                   alt="Imagen de la tarjeta 1"
                   style="
                     width: 100%;
-                    max-height: 350px;
+                    max-height: 400px;
                     image-rendering: pixelated;
                   "
                 />
@@ -154,10 +154,10 @@
             <div class="card mb-4">
               <div class="card-body">
                 <h2 class="card-title">Ingredientes</h2>
-                <ul class="list-unstyled">
+                <ul class="list-unstyled" >
                   <li *ngFor="let ingredient of service.ingredients; let i = index">
                     {{ i + 1 }}. {{ ingredient.trim() }}
-                    <hr style="border-top: 1px dotted gray" />
+                    <hr style="border-top: 1px dotted rgb(36, 35, 35)" />
                   </li>
                 </ul>
               </div>
@@ -199,7 +199,7 @@
                     <textarea class="form-control" id="textoComentario" name="text" [(ngModel)]="nuevoComentario.text" required></textarea>
                   </div>
           
-                  <button type="submit" class="btn btn-secondary" [disabled]="!commentForm.valid">Agregar Comentario</button>
+                  <button type="submit" class="button" [disabled]="!commentForm.valid">Agregar Comentario</button>
                 </form>
           
                 <!-- Lista de comentarios -->

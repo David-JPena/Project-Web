@@ -1,6 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg" style="background-color: #0097b2;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Logo</a>
+    <!-- Incluye la imagen como el logo dentro del enlace -->
+    <a class="navbar-brand" href="#">
+      <img src="../../../assets/images/logo.jpeg" alt="Logo" style="height: 65px; width: 180px;">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,49 +11,50 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/tasks" routerLinkActive="active">Publico</a>
+          <a class="nav-link active font-weight-bold" aria-current="page" routerLink="/tasks" routerLinkActive="active">Público</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/private" routerLinkActive="active">Privado</a>
+          <a class="nav-link font-weight-bold" routerLink="/private" routerLinkActive="active">Privado</a>
         </li>
       </ul>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/add" routerLinkActive="active">add</a>
+          <a class="nav-link active font-weight-bold" aria-current="page" routerLink="/home" routerLinkActive="active">Home</a>
         </li>
-        
       </ul>
+
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/home" routerLinkActive="active">Home</a>
+          <a class="nav-link active font-weight-bold" aria-current="page" routerLink="/add" routerLinkActive="active">Agregar receta</a>
         </li>
-        
       </ul>
+
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/list" routerLinkActive="active">List</a>
+          <a class="nav-link active font-weight-bold" aria-current="page" routerLink="/list" routerLinkActive="active">Lista de recetas</a>
         </li>
-        
       </ul>
       
       <ul class="navbar-nav ml-auto">
         <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/signin" routerLinkActive="active">Iniciar Sesión</a>
+            <a class="nav-link font-weight-bold" routerLink="/signin" routerLinkActive="active">Iniciar Sesión</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Registarse</a>
+            <a class="nav-link font-weight-bold" routerLink="/signup" routerLinkActive="active">Registrarse</a>
           </li>
         </ng-container>
         <ng-template #loggedIn>
           <li class="nav-item">
-            <a class="nav-link" style="cursor: pointer;" (click)="authService.logout()">Salir</a>
+            <a class="nav-link font-weight-bold" style="cursor: pointer;" (click)="authService.logout()">Salir</a>
           </li>
         </ng-template>
       </ul>
     </div>
   </div>
 </nav>
+
+
 
 <div class="container p-5">
   <router-outlet></router-outlet>
