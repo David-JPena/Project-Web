@@ -1,37 +1,46 @@
-<!-- list.component.html -->
+<button class="btn btn-outline-primary" (click)="navigateToAdd()">
+  Agregar
+</button>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col" *ngFor="let service of services">
+    <div class="card h-100">
+      <div class="card-body">
+        <img [src]="getImageUrl(service.image)" (click)="navigateToDetails(service._id)"
+        class="card-img-top img-fluid" alt="Imagen del servicio" style="height: 300px; object-fit: cover;">
+        <h5 class="card-title">{{service.name}}</h5>
+        <p class="card-text">{{service.description}}</p>
 
+        <p class="card-text">Ingredientes:</p>
+        <ul class="list-group">
+          <li *ngFor="let ingredient of service.ingredients; let i = index" class="list-group-item">
+            {{ ingredient.trim() }}
+          </li>
+        </ul>
 
-<div *ngFor="let service of services">
-    <div>
-      <button (click)="navigateToAdd()">Agregar</button>
+        <p class="card-text">Pasos:</p>
+        <ol class="list-group">
+          <li *ngFor="let step of service.steps; let i = index" class="list-group-item">
+            {{ step.trim() }}
+          </li>
+        </ol>
+
+        <p class="card-text">Categorias: {{ service.categories }}</p>
+      </div>
+
+     
+
+      <div class="card-footer">
+       
+        <button class="btn btn-outline-primary" (click)="navigateToDetails(service._id)">
+          Ver Detalles
+        </button>
+        <button class="btn btn-outline-danger" (click)="deleteService(service._id)">
+          Eliminar
+        </button>
+        <button class="btn btn-outline-warning" (click)="navigateToEdit(service._id)">
+          Editar
+        </button>
+      </div>
     </div>
-    <h3>{{ service.name }}</h3>
-    <p>{{ service.description }}</p>
-  
-    
-    <p>Ingredientes:</p>
-    <ul>
-      <li *ngFor="let ingredient of service.ingredients; let i = index">
-        {{ ingredient.trim() }}
-      </li>
-    </ul>
-    
-    <p>Pasos:</p>
-    <ol>
-      <li *ngFor="let step of service.steps; let i = index">
-        {{ step.trim() }}
-      </li>
-    </ol>
-  
-    <p>Categorias: {{ service.categories }}</p>
-    <img [src]="getImageUrl(service.image)" alt="Imagen del servicio">
-    
-    <button (click)="navigateToDetails(service._id)">Ver Detalles</button>
-    
-    <!-- Botón para eliminar -->
-    <button (click)="deleteService(service._id)">Eliminar</button>
-    
-    <!-- Botón para editar -->
-    <button (click)="navigateToEdit(service._id)">Editar</button>
   </div>
-  
+</div>

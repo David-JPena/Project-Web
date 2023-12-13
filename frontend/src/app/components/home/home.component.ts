@@ -1,7 +1,8 @@
 // home.component.ts
 
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
 
 @Component({
@@ -11,11 +12,15 @@ import { TasksService } from '../../services/tasks.service';
 })
 export class HomeComponent implements OnInit {
   services: any[] = [];
+  searchTerm: string = '';
+  selectedCategory: string = '';
+  categories: string[] = ['Desayuno', 'Almuerzo', 'Cena', 'Vegetariana', 'Postres'];
 
-  constructor(private apiService: TasksService) { }
+  constructor(private apiService: TasksService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAllServices();
+    this.restoreLikesFromStorage();
   }
 
   getAllServices(): void {
@@ -24,37 +29,103 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
-
-  getIngredientsArray(ingredients: string): string[] {
-    if (typeof ingredients !== 'string') {
-      console.error('Ingredients is not a string:', ingredients);
-      return [];
-    }
-    console.log('Ingredients raw:', ingredients);
-    const result = ingredients.split(',');
-    console.log('Ingredients array:', result);
-    return result;
-  }
-
-// home.component.ts
-
-getStepsArray(steps: string): string[] {
-  if (typeof steps !== 'string') {
-    console.error('Steps is not a string:', steps);
-    return [];
-  }
-  console.log('Steps raw:', steps);
-  const result = steps.split(',');
-  console.log('Steps array:', result);
-  return result;
-}
-
-  navigateToEdit(serviceId: string): void {
-    // Implementa la lógica para la navegación a la edición si es necesario
-  }
-
   getImageUrl(imageName: string): string {
+    // Construye la URL completa para la imagen
     return `http://localhost:3000/uploads/${imageName}`;
   }
+
+  navigateToDetails(serviceId: string): void {
+    if (serviceId) {
+      // Navegar al detalle del servicio usando la ID del servicio
+      this.router.navigate(['/details', serviceId]);
+    }
+  }
+
+  restoreLikesFromStorage(): void {
+    // Recupera el estado de "Me gusta" desde el almacenamiento local o de sesión
+    this.services.forEach(service => {
+      const liked = sessionStorage.getItem(`liked_${service._id}`);
+      service.liked = liked === 'true';
+    });
+  }
+  addLike(serviceId: string): void {
+    const service = this.services.find(s => s._id === serviceId);
+    if (service) {
+      if (service.liked) {
+        // Si ya le diste "Me gusta", quítalo
+        this.apiService.removeLike(serviceId).subscribe(() => {
+          service.likes--;
+          service.liked = false;
+          sessionStorage.setItem(`liked_${service._id}`, 'false');
+        });
+      } else {
+        // Si aún no le has dado "Me gusta", agrégalo
+        this.apiService.addLike(serviceId).subscribe(() => {
+          service.likes++;
+          service.liked = true;
+          sessionStorage.setItem(`liked_${service._id}`, 'true');
+        });
+      }
+    }
+  }
+
+  removeLike(serviceId: string): void {
+    this.apiService.removeLike(serviceId).subscribe(
+      (respuesta) => {
+        const service = this.services.find(s => s._id === serviceId);
+        if (service) {
+          service.likes = respuesta.likes;
+          service.liked = false; // Desmarcado como "Me gusta" localmente
+          sessionStorage.setItem(`liked_${service._id}`, 'false'); // Actualiza el almacenamiento local o de sesión
+        }
+      },
+      (error) => {
+        console.error('Error al quitar "Me gusta"', error);
+      }
+    );
+  }
+  
+  
+
+  search(): void {
+    console.log('Término de búsqueda:', this.searchTerm);
+    // Llama al servicio para realizar la búsqueda
+    if (this.searchTerm.trim() !== '') {
+      this.apiService.searchServices(this.searchTerm).subscribe(
+        (response) => {
+          this.services = response;
+        },
+        (error) => {
+     
+          console.error('Error al realizar la búsqueda', error);
+        }
+      );
+    } else {
+      // Si el término de búsqueda está vacío, obtén todos los servicios
+      this.getAllServices();
+    }
+  }
+  searchByCategory(): void {
+    if (this.selectedCategory.trim() !== '') {
+      this.apiService.searchByCategory(this.selectedCategory).subscribe(
+        (response) => {
+          this.services = response;
+        },
+        (error) => {
+          console.error('Error al realizar la búsqueda por categoría', error);
+        }
+      );
+    } else {
+      this.getAllServices();
+    }
+  }
+  selectCategory(category: string): void {
+    this.selectedCategory = category;
+    this.searchByCategory();  // Llama a la función de búsqueda con la nueva categoría seleccionada
+  }
+
+  
+ 
 }
+
+

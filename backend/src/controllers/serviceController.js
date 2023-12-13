@@ -195,6 +195,54 @@ const services = {
     }
     },
 
+    
+
+    searchByName: async (req, res) => {
+        try {
+            const searchTerm = req.query.name; // asumiendo que el parámetro de búsqueda es 'name'
+            
+            if (!searchTerm) {
+                return res.status(400).json({ error: 'Se requiere un nombre para realizar la búsqueda.' });
+            }
+    
+            // Utiliza una expresión regular para hacer la búsqueda de manera insensible a mayúsculas y minúsculas
+            const regex = new RegExp(`^${searchTerm}$`, 'i');
+    
+            const matchingServices = await serviceModel.find({ name: regex });
+    
+            if (matchingServices.length === 0) {
+                return res.status(404).json({ msg: "No se encontraron servicios con el nombre proporcionado." });
+            }
+    
+            res.status(200).json(matchingServices);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Error interno del servidor" });
+        }
+    },
+    
+    searchByCategory: async (req, res) => {
+        try {
+            const category = req.query.category;
+    
+            if (!category) {
+                return res.status(400).json({ error: 'Se requiere una categoría para realizar la búsqueda.' });
+            }
+    
+            const matchingServices = await serviceModel.find({ categories: category });
+    
+            if (matchingServices.length === 0) {
+                return res.status(404).json({ msg: "No se encontraron servicios en la categoría proporcionada." });
+            }
+    
+            res.status(200).json(matchingServices);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Error interno del servidor" });
+        }
+    },
+    
+      
 };
 
 module.exports = services;

@@ -1,0 +1,15 @@
+/* Agrega esto a tu hoja de estilos o archivo CSS */
+.card-hover {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card-hover:hover {
+    transform: scale(1.05); /* Ajusta la escala según tus necesidades */
+  }
+  /* Agrega esta regla en tu hoja de estilos para ajustar el ancho del campo de búsqueda */
+.search-input {
+    max-width: 150px; /* Puedes ajustar el valor según tus preferencias */
+  }
+  .liked::before {
+    color: red !important;
+  }

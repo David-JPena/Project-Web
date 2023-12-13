@@ -22,7 +22,18 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
+  signIn() {
+    this.authService.signIn(this.user)
+      .subscribe(
+        res => {
+          console.log(res)
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['/private']);
+        },
+        err => console.log(err)
+    )
+  }
+  isSignUp: boolean = true;
   signUp() {
     this.authService.signUp(this.user)
       .subscribe(
@@ -33,5 +44,13 @@ export class SignupComponent implements OnInit {
         },
         err => console.log(err)
     )
+  }
+  toggleForm() {
+    if (!this.isSignUp) {
+      // Solo cambiar a inicio de sesión si actualmente está en registro
+      this.isSignUp = true;
+    }
+    const container = document.getElementById('container')!;
+    container.classList.toggle('right-panel-active');
   }
 }

@@ -3,9 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../../services/tasks.service';
 import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
-import { NgForm } from '@angular/forms';  // Importa NgForm
 
 @Component({
   selector: 'app-details',
@@ -17,19 +15,33 @@ export class DetailsComponent implements OnInit {
   nuevoComentario: any = { user: '', text: '' };
   comentarios: any[] = [];
   likes: number = 0;
+  services: any[] = [];
 
   constructor( public apiService: TasksService, private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
-    // Recupera la ID del servicio de la ruta
-    this.route.paramMap.subscribe(params => {
-      this.idServicio = params.get('id') || ''; // Utiliza el valor predeterminado si no se encuentra la ID
-      if (this.idServicio) {
-        this.cargarComentarios();
-        this.actualizarLikes();
-      }
-    });
-  }
+// details.component.ts
+
+ngOnInit(): void {
+  // Recupera la ID del servicio de la ruta
+  this.route.paramMap.subscribe(params => {
+    this.idServicio = params.get('id') || ''; // Utiliza el valor predeterminado si no se encuentra la ID
+    console.log('ID del Servicio:', this.idServicio);
+
+    if (this.idServicio) {
+      this.apiService.getServiceById(this.idServicio).subscribe(
+        (data) => {
+          this.services = [data]; // Puedes necesitar ajustar esto según la estructura de tu servicio
+          this.cargarComentarios();
+          // this.actualizarLikes();
+        },
+        (error) => {
+          console.error('Error al obtener información del servicio', error);
+        }
+      );
+    }
+  });
+}
+
 
   cargarComentarios(): void {
     this.apiService.getComentarios(this.idServicio).subscribe(
@@ -58,17 +70,17 @@ agregarComentario(): void {
 }
 
   // En el componente Angular
-  darMeGusta(): void {
-    this.apiService.addLike(this.idServicio).subscribe(
-        (respuesta) => {
-            console.log('Me gusta agregado con éxito', respuesta);
-            this.actualizarLikes();
-        },
-        (error) => {
-            console.error('Error al agregar me gusta', error);
-        }
-    );
-}
+//   darMeGusta(): void {
+//     this.apiService.addLike(this.idServicio).subscribe(
+//         (respuesta) => {
+//             console.log('Me gusta agregado con éxito', respuesta);
+//             // this.actualizarLikes();
+//         },
+//         (error) => {
+//             console.error('Error al agregar me gusta', error);
+//         }
+//     );
+// }
 
 actualizarLikes(): void {
     this.apiService.getLikes(this.idServicio).subscribe(
@@ -80,4 +92,11 @@ actualizarLikes(): void {
         }
     );
 }
+getImageUrl(imageName: string): string {
+  const imageUrl = `http://localhost:3000/uploads/${imageName}`;
+  console.log('Image URL:', imageUrl);
+  return imageUrl;
+}
+
+
 }

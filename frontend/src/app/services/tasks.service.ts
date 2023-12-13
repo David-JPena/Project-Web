@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -27,9 +27,10 @@ export class TasksService {
     return this.http.post<any>(this.recipeUrl , data);
   }
 
-  getAllServices(): Observable<any> {
-    return this.http.get<any>(this.recipeUrl );
+  getAllServices(): Observable<any[]> {
+    return this.http.get<any[]>(this.recipeUrl);
   }
+  
 
   getServiceById(id: string): Observable<any> {
     return this.http.get<any>(`${this.recipeUrl }/${id}`);
@@ -56,15 +57,34 @@ export class TasksService {
   }
 
   // En el servicio Angular
-addLike(idServicio: string): Observable<any> {
-  const url = `${this.recipeUrl}/${idServicio}/like`;
+// addLike(idServicio: string): Observable<any> {
+//   const url = `${this.recipeUrl}/${idServicio}/like`;
+//   return this.http.post(url, {});
+// }
+addLike(serviceId: string): Observable<any> {
+  const url = `${this.recipeUrl}/${serviceId}/like`;
   return this.http.post(url, {});
 }
+removeLike(serviceId: string): Observable<any> {
+  const url = `${this.recipeUrl}/${serviceId}/like`;
+  return this.http.delete(url);
+}
+
 // En el servicio Angular
 getLikes(idServicio: string): Observable<any> {
   const url = `${this.recipeUrl}/${idServicio}/likes`;
   return this.http.get(url);
 }
+
+searchServices(searchTerm: string): Observable<any> {
+  const url = `${this.recipeUrl}/search?name=${searchTerm}`;
+  return this.http.get<any>(url);
+}
+searchByCategory(category: string): Observable<any> {
+  const url = `${this.recipeUrl}/searchByCategory?category=${category}`;
+  return this.http.get<any>(url);
+}
+
 
 
 }

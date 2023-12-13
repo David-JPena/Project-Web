@@ -2,6 +2,14 @@ import { Component } from '@angular/core';
 import {  TasksService } from '../../services/tasks.service';
 import { Router } from '@angular/router';
 
+interface FormData {
+  name: string;
+  description: string;
+  ingredients: string[];
+  steps: string[];  
+  categories: string;
+  image: File | null;
+}
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -13,8 +21,8 @@ export class AddComponent {
     name: '',
     description: '',
     // price: null,
-    ingredients: [''], // Inicializado con un ingrediente vacío
-    steps: [''] ,
+    ingredients: [], // Inicializado con un ingrediente vacío
+    steps: [] ,
     categories: "",
     image: null // Cambiado a null para manejar archivos
   };

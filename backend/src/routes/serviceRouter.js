@@ -3,8 +3,11 @@ const upload = require("../config/multer");
 const serviceController = require("../controllers/serviceController");
 
 // Rutas del controlador de servicios
+
 router.route("/services").post(upload.single("file"), (req, res) => serviceController.create(req, res));
 router.route("/services").get((req, res) => serviceController.getAll(req, res));
+router.route("/services/search").get((req, res) => serviceController.searchByName(req, res));
+router.route("/services/searchByCategory").get((req, res) => serviceController.searchByCategory(req, res));
 router.route("/services/:id/comments").post((req, res) => serviceController.addComment(req, res));
 router.route("/services/:id/comments").get((req, res) => serviceController.getComments(req, res));
 router.route("/services/:id/like").post((req, res) => serviceController.addLike(req, res));

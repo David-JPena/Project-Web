@@ -1,5 +1,5 @@
 <!-- form.component.html -->
-<div>
+<!-- <div>
     <h2>Formulario de Servicio</h2>
     <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
       <div>
@@ -57,4 +57,67 @@
   
     <button (click)="navigateToList()">Ir a la Lista</button>
   </div>
+   -->
+
+   <!-- form.component.html -->
+   <div class="container mt-5">
+    <h2>Formulario de Servicio</h2>
   
+    <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate enctype="multipart/form-data">
+  
+      <div class="mb-3">
+        <label for="name" class="form-label">Titulo de la receta:</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="formData.name" name="name" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="description" class="form-label">Descripción:</label>
+        <textarea class="form-control" id="description" [(ngModel)]="formData.description" name="description" required></textarea>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Ingredientes:</label>
+        <div id="ingredientes-container" class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="nuevoIngrediente" name="ingredients" required>
+          <button class="btn btn-outline-secondary" type="button" (click)="agregarIngrediente()">Agregar Ingrediente</button>
+        </div>
+  
+        <div *ngFor="let ingrediente of formData.ingredients; let i = index" class="d-flex align-items-center border rounded py-1 px-2 mb-2">
+          <span class="me-2">{{ i + 1 }}. </span>
+          <span class="flex-grow-1">{{ ingrediente }}</span>
+          <button class="btn btn-outline-danger btn-sm" type="button" (click)="eliminarIngrediente(i)">Eliminar</button>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Pasos:</label> 
+       <div id="pasos-container" class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="nuevoPaso" name="steps" required>
+          <button class="btn btn-outline-secondary" type="button" (click)="agregarPaso()">Agregar Paso</button>
+        </div>
+  
+        <div *ngFor="let paso of formData.steps; let i = index" class="d-flex align-items-center border rounded py-1 px-2 mb-2">
+          <span class="me-2">{{ i + 1 }}. </span> 
+          <span class="flex-grow-1">{{ paso}}</span>
+          <button class="btn btn-outline-danger btn-sm" type="button" (click)="eliminarPaso(i)">Eliminar </button>  
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="categories" class="form-label">Categorias:</label>
+        <select class="form-select" id="categories" [(ngModel)]="formData.categories" name="categories" required>
+          <option *ngFor="let category of categoryOptions" [value]="category">{{ category }}</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label for="image" class="form-label">Imagen:</label>
+        <input class="form-control" type="file" (change)="onFileChange($event)" accept="image/*" name="file">
+      </div>
+  
+      <button class="btn btn-primary" type="submit">Enviar</button>
+    </form>
+  
+    <button class="btn btn-secondary mt-3"(click)="navigateToList()">Ir a la Lista</button>
+  
+  </div>
