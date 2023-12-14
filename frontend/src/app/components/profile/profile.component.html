@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div *ngIf="user">
   <h2>Perfil de {{ user.email }}</h2>
 
@@ -10,6 +11,17 @@
   <button (click)="showFollowingUsers()">Ver Seguidores</button>
 
   <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
+=======
+<div class="text-center">
+  <div *ngIf="user" class="mb-4">
+    <img src="URL_DE_TU_FOTO" alt="{{ user.email }}" class="rounded-circle" style="width: 150px; height: 150px;">
+    <h2 class="mt-3">Perfil de {{ user.email }}</h2>
+  </div>
+
+  <div class="mb-4">
+    <button *ngIf="canFollowUser(user._id)" class="btn btn-primary" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
+  </div>
+>>>>>>> 3770e86dc9c362c8724a5002ce3f3b89cf6ae9d4
 
   <!-- Otras secciones del perfil aquí -->
 </div>

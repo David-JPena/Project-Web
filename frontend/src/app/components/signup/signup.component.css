@@ -5,14 +5,21 @@
 	box-sizing: border-box;
 }
 
+.background-color {
+	background-color: #f2f8fc; /* Reemplaza con el color que desees */
+	height: auto;
+	width: auto;
+	margin: 0;
+}
+
 body {
-	background: #f6f5f7;
+	background: #d8cfe1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
-	height: 100vh;
+	height: 200vh;
 	margin: -20px 0 50px;
 }
 
@@ -96,9 +103,11 @@ input {
 			0 10px 10px rgba(0,0,0,0.22);
 	position: relative;
 	overflow: hidden;
-	width: 768px;
-	max-width: 100%;
-	min-height: 480px;
+	width: 850px;
+	max-width: 350%;
+	min-height: 600px;
+	margin-top: 2.5rem;
+	margin-bottom: 4rem;
 }
 
 .form-container {
@@ -161,7 +170,7 @@ input {
 
 .overlay {
 	background: #FF416C;
-	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+	background: -webkit-linear-gradient(to right, #2b83ff, #FF416C);
 	background: linear-gradient(to right, #FF4B2B, #FF416C);
 	background-repeat: no-repeat;
 	background-size: cover;

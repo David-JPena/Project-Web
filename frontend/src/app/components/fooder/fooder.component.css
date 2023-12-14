@@ -13,7 +13,7 @@
 }
 
 .site-footer {
-    background-color: rgb(36, 107, 131);
+    background-color: rgb(32, 125, 155);
     color: #fff;
     padding: 20px 0;
 }
@@ -34,7 +34,7 @@
     padding: 20px;
     font-size: 15px;
     color: #fcfbfb;
-    border: 1px solid rgb(44, 120, 145); /* Bordes para resaltar la ubicación de las secciones, puedes eliminar esto si no lo deseas */
+    border: 1px solid rgb(45, 138, 169); /* Bordes para resaltar la ubicación de las secciones, puedes eliminar esto si no lo deseas */
 }
 
 .footer-link a {
