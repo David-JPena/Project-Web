@@ -16,6 +16,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { SuggestedUsersComponent } from './components/suggested-users/suggested-users.component';
 import { FollowingUsersComponent } from './components/following-users/following-users.component';
+import { EditPerfilComponent } from './components/edit-perfil/edit-perfil.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,10 @@ const routes: Routes = [
     path: 'following-users',
     component: FollowingUsersComponent  // Asegúrate de crear este componente
   },
+  {
+    path: 'edit-perfil',
+    component: EditPerfilComponent
+  }
 ];
 
 @NgModule({

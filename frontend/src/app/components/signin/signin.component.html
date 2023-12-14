@@ -1,30 +1,6 @@
-<!-- <div class="row">
-  <div class="col-md-4 mx-auto">
-    <div class="card">
-      <div class="card-header">
-        <p>Iniciar Sesion</p>
-      </div>
-      <div class="card-body">
-        <form (submit)="signIn()">
-          <div class="form-group">
-            <input type="text" [(ngModel)]="user.email" name="email" class="form-control" placeholder="Email" required
-              autofocus>
-          </div>
-          <div class="form-group">
-            <input type="password" [(ngModel)]="user.password" name="password" class="form-control"
-              placeholder="Contraseña" required>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block"> Iniciar Sesion
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <body class="background-color">
   <div class="container" id="container">
- 
+
     <div class="form-container sign-up-container">
       <form action="#" (submit)="signUp()">
         <h1>Crear tu cuenta</h1>
@@ -39,8 +15,7 @@
         <button type="submit"  (click)="toggleForm()">Inscribirse</button>
       </form>
     </div>
-  
-  
+
     <div class="form-container sign-in-container">
       <form (submit)="signIn()">
         <h1>Iniciar sesión</h1>
@@ -56,7 +31,7 @@
         <button>Login</button>
       </form>
     </div>
-  
+
     <div class="overlay-container" >
       <div class="overlay">
         <div class="overlay-panel overlay-left">
@@ -72,7 +47,5 @@
       </div>
     </div>
   </div>
-  
+
 </body>
-
-

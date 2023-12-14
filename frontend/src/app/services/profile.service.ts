@@ -83,4 +83,9 @@ export class ProfileService {
       );
   }
 
+  updateUserProfile(updatedUser: any): Observable<any> {
+    const url = `${this.apiUrl}/actualizarPerfil`; // Reemplaza con la ruta de tu endpoint de actualización
+    return this.http.put(url, updatedUser);
+  }
+
 }

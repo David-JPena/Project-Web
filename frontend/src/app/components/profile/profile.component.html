@@ -1,27 +1,44 @@
-<<<<<<< HEAD
 <div *ngIf="user">
-  <h2>Perfil de {{ user.email }}</h2>
+  <h2>Perfil de {{ user.name || user.email }}</h2>
 
-  <!-- Agregar el contador de seguidores si existe la propiedad followers -->
-  <p *ngIf="user.followers">
-    Seguidores: {{ user.followers.length }}
-  </p>
+  <!-- Mostrar el formulario de edición si está en modo de edición -->
+  <ng-container *ngIf="isEditMode; else viewMode">
+    <!-- Formulario de edición -->
+    <form (ngSubmit)="saveChanges()">
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="editedUser.name">
 
-  <!-- Botón para mostrar los usuarios seguidos -->
-  <button (click)="showFollowingUsers()">Ver Seguidores</button>
+      <label for="description">Descripción:</label>
+      <textarea id="description" name="description" [(ngModel)]="editedUser.description"></textarea>
 
-  <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
-=======
-<div class="text-center">
-  <div *ngIf="user" class="mb-4">
-    <img src="URL_DE_TU_FOTO" alt="{{ user.email }}" class="rounded-circle" style="width: 150px; height: 150px;">
-    <h2 class="mt-3">Perfil de {{ user.email }}</h2>
-  </div>
+      <label for="image">Imagen URL:</label>
+      <input type="text" id="image" name="image" [(ngModel)]="editedUser.image">
 
-  <div class="mb-4">
-    <button *ngIf="canFollowUser(user._id)" class="btn btn-primary" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
-  </div>
->>>>>>> 3770e86dc9c362c8724a5002ce3f3b89cf6ae9d4
+      <button type="submit">Guardar Cambios</button>
+    </form>
+  </ng-container>
 
-  <!-- Otras secciones del perfil aquí -->
+  <!-- Vista normal -->
+  <ng-template #viewMode>
+    <!-- Mostrar imagen si existe -->
+    <p *ngIf="user.image">
+      <img *ngIf="isEditMode && editedUser.image" [src]="editedUser.image" alt="Imagen de perfil">
+    </p>
+
+    <p *ngIf="user.description">Descripción: {{ user.description }}</p>
+
+    <p>Correo Electrónico: {{ user.email }}</p>
+
+    <!-- Agregar el contador de seguidores si existe la propiedad followers -->
+    <p *ngIf="user.followers">Seguidores: {{ user.followers?.length }}</p>
+
+    <!-- En el botón para activar el modo de edición -->
+    <button *ngIf="isOwnProfile && !isEditMode" (click)="enterEditMode()">Editar Perfil</button>
+
+    <button (click)="showFollowingUsers()">Ver Seguidores</button>
+
+    <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
+
+    <!-- Otras secciones del perfil aquí -->
+  </ng-template>
 </div>
