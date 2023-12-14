@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .small {
     font-size: 12px; /* Puedes ajustar el tamaño según tus preferencias */
   }
@@ -5,4 +6,72 @@
     font-size: 14px; /* Ajusta el tamaño según tus preferencias */
     /* Otros estilos si es necesario */
   }
+=======
+body {
+    background-color: #f8f9fa;
+  }
+
+  .b {
+    background-color: #f8fbfe;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .card-img-top {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .perfil {
+    padding-left: 15px;
+  }
+
+  .bi {
+    font-size: 1.5rem;
+  }
+
+  .circle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #06707a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .blue-bg {
+    background-color: #0eadcd;
+    color: #fff;
+  }
+
+  .ingredient-circle {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #28a745; /* Adjust the color as needed */
+    color: #fff;
+  }
+  .button {
+    background-color: #28a745; /* Green color */
+    color: #fefefe; /* White text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjust font size as needed */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  .button:disabled {
+    background-color: #8e9094; /* Gray color when button is disabled */
+    cursor: not-allowed;
+  }
+  
+  /* Add more styles as needed */
+>>>>>>> e238eaebfafb01e34435408fb8f07dc88f10ab88
   

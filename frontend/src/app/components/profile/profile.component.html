@@ -1,0 +1,27 @@
+<div class="text-center">
+  <!-- Profile Image Section -->
+  <div *ngIf="user" class="mb-4">
+    
+    <h2 class="mt-3">Perfil de {{ user.email }}</h2>
+  </div>
+
+  <!-- Followers Section -->
+  <div class="mb-4">
+    <p *ngIf="user.followers && user.followers.length > 0">
+      Seguidores: {{ user.followers.length }}
+    </p>
+  </div>
+
+  <!-- Show Following Users Button -->
+  <div class="mb-4">
+    <button (click)="showFollowingUsers()">Ver Seguidores</button>
+  </div>
+
+  <!-- Suggested Users Button -->
+  <div class="mb-4">
+    <button *ngIf="canFollowUser(user._id)" class="btn btn-primary" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
+  </div>
+
+  <!-- Other sections of the profile can be added here -->
+
+</div>

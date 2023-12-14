@@ -1,0 +1,44 @@
+
+
+/* Estilo para el fondo del navbar */
+.navbar {
+    background-color: #3498db; /* Cambia este color a tu tono de azul preferido */
+  }
+  
+  /* Estilo para el color del texto del navbar */
+  .navbar-nav .nav-link {
+    color: #fff;
+    font-size: 17px; /* Color de texto blanco */
+  }
+  
+  /* Estilo para el color del texto activo en el navbar */
+  .navbar-nav .nav-item.active .nav-link {
+    color: #5900ff; /* Color de texto amarillo para el ítem activo */
+  }
+  
+  /* Estilo para el enlace de la marca (logo) en el navbar */
+  .navbar-brand {
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  /* Estilo para el botón de hamburguesa en el navbar */
+  .navbar-toggler-icon {
+    background-color: #fff;
+  }
+  
+  /* Estilo para el container de la página principal */
+  .container {
+    padding-top: 20px;
+  }
+  
+  /* Estilo para el enlace de cerrar sesión */
+  .navbar-nav.ml-auto .nav-link {
+    color: #fff; /* Puedes cambiar el color a tu preferencia */
+  }
+  
+  /* Estilo para el enlace de cerrar sesión al pasar el ratón sobre él */
+  .navbar-nav.ml-auto .nav-link:hover {
+    color: #fff; /* Puedes cambiar el color a tu preferencia */
+  }
+  

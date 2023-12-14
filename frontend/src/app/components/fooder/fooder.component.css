@@ -1,0 +1,208 @@
+
+/*footer*/
+
+
+/* fooder.component.css */
+
+
+
+.con {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.site-footer {
+    background-color: rgb(32, 125, 155);
+    color: #fff;
+    padding: 20px 0;
+}
+
+.footer-sections-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.footer-secti {
+    flex: 1;
+    margin: 0;
+    font-size: 12px;
+}
+
+.footer-bo {
+    padding: 20px;
+    font-size: 15px;
+    color: #fcfbfb;
+    border: 1px solid rgb(45, 138, 169); /* Bordes para resaltar la ubicación de las secciones, puedes eliminar esto si no lo deseas */
+}
+
+.footer-link a {
+    color: #f6f3f3;
+    text-decoration: none;
+}
+
+.footer-line {
+    border: 0;
+}
+
+.social-icons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons li {
+    margin: 0 10px;
+}
+
+.footer-second-s {
+    text-align: center;
+    margin-top: 20px;
+    
+}
+  
+.social-li {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+  
+.social-li li {
+    margin: 0 10px;
+    position: relative;
+}
+  
+
+  /* Estilo del icono */
+.social-li li a {
+    position: relative;
+    z-index: 1; /* Poner sobre la línea */
+}
+  
+.footer-line {
+    width: 100%;
+    margin-top: 20px;
+}
+.p{
+    text-align: center;
+    font-size: 16px;
+    color: #fffefe;
+    margin-top: 10px;
+}
+.footer-bo a {
+    color: #fff;
+
+}
+.footer-bo input[type="email"],
+.footer-bo textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(66, 141, 167);
+  border: 1px solid #f1f5f6;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.footer-bo textarea {
+  height: 100px; /* Ajusta la altura según tus necesidades */
+}
+
+.footer-bo button {
+  background-color: #f7fbf8;
+  color: rgb(7, 7, 7);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.footer-bo button:hover {
+  background-color: #14c46c;
+}
+.footer-link {
+    margin-bottom: 10px;
+}
+
+.footer-secti {
+    margin-bottom: 10px;
+}
+
+.quick-contact input,
+.quick-contact textarea {
+    margin-bottom: 0px;
+    
+}.in{
+    margin-bottom: 15px;
+}
+
+ /* Header in the first three columns */
+.fu h2 {
+        font-size: 18px;
+        color: #fff;
+}
+
+    /* Paragraph text in the first three columns */
+.footer-link p {
+        font-size: 14px;
+}
+ /* Quick contact section styles */
+ .quick-contact input,
+ .quick-contact textarea {
+     font-size: 14px;
+     
+ }
+
+ .quick-contact button {
+     font-size: 16px;
+ }
+
+
+ .action-icons {
+     font-size: 36px;
+ }
+
+ .action-icons i {
+     margin: 0 15px;
+     color: #007bff;
+     transition: color 0.3s ease; /* Add a smooth transition effect */
+ }
+
+ .action-icons i:hover {
+     color: #0056b3; /* Change the color on hover */
+ }
+ .footer-second-s .action-icons i {
+     font-size: 1.5rem; /* Puedes ajustar este valor según tus preferencias */
+   }
+   body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .site-footer {
+    flex-shrink: 0;
+  }
+  
+  .footer-sections-container {
+    flex: 1;
+  }
+  
+  .footer-copyright {
+    text-align: center;
+    padding: 10px;
+    background-color: #333; /* Puedes ajustar el color de fondo según tus preferencias */
+    color: #fff; /* Puedes ajustar el color del texto según tus preferencias */
+  }
+  .p{
+    text-align: center;
+  }
+  
+
+

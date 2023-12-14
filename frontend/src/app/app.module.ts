@@ -17,7 +17,11 @@ import { EditComponent } from './components/edit/edit.component';
 import { HomeComponent } from './components/home/home.component';
 import { ListComponent } from './components/list/list.component';
 import { DetailsComponent } from './components/details/details.component';
-
+import { FooderComponent } from './components/fooder/fooder.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
+import { SuggestedUsersComponent } from './components/suggested-users/suggested-users.component';
+import { FollowingUsersComponent } from './components/following-users/following-users.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,12 @@ import { DetailsComponent } from './components/details/details.component';
     HomeComponent,
     ListComponent,
     DetailsComponent,
-   
+    FooderComponent,
+    ProfileComponent,
+    ProfileDetailsComponent,
+    SuggestedUsersComponent,
+    FollowingUsersComponent,
+
   ],
   imports: [
     BrowserModule,

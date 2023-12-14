@@ -1,0 +1,11 @@
+<div *ngIf="followingUsers && followingUsers.length > 0">
+  <p>Usuarios que sigues:</p>
+  <ul>
+    <li *ngFor="let user of followingUsers">
+      {{ user.email }}
+      <!-- Agregar botones de acción -->
+      <button (click)="unfollowUser(user._id)">Dejar de seguir</button>
+      <button (click)="viewProfile(user._id)">Ver perfil</button>
+    </li>
+  </ul>
+</div>

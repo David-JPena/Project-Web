@@ -14,7 +14,13 @@ export class HomeComponent implements OnInit {
   services: any[] = [];
   searchTerm: string = '';
   selectedCategory: string = '';
-  categories: string[] = ['Desayuno', 'Almuerzo', 'Cena', 'Vegetariana', 'Postres'];
+  categories: { name: string; checked: boolean }[] = [
+    { name: 'Desayuno', checked: false },
+    { name: 'Almuerzo', checked: false },
+    { name: 'Cena', checked: false },
+    { name: 'Vegetariana', checked: false },
+    { name: 'Postres', checked: false },
+  ];
 
   constructor(private apiService: TasksService, private router: Router) {}
 
@@ -70,6 +76,14 @@ export class HomeComponent implements OnInit {
       }
     }
   }
+  toggleSave(service: any) {
+    service.saved = !service.saved;
+    // Puedes agregar la lógica necesaria para guardar o desguardar el servicio
+  }
+  toggleLike(service: any) {
+    service.liked = !service.liked;
+    service.likes += service.liked ? 1 : -1;
+  }
 
   removeLike(serviceId: string): void {
     this.apiService.removeLike(serviceId).subscribe(
@@ -108,8 +122,12 @@ export class HomeComponent implements OnInit {
     }
   }
   searchByCategory(): void {
-    if (this.selectedCategory.trim() !== '') {
-      this.apiService.searchByCategory(this.selectedCategory).subscribe(
+    const selectedCategories = this.categories
+      .filter((category) => category.checked)
+      .map((category) => category.name);
+
+    if (selectedCategories.length > 0) {
+      this.apiService.searchByCategory(selectedCategories.join(',')).subscribe(
         (response) => {
           this.services = response;
         },
@@ -121,6 +139,7 @@ export class HomeComponent implements OnInit {
       this.getServicesAll();
     }
   }
+  
   selectCategory(category: string): void {
     this.selectedCategory = category;
     this.searchByCategory();  // Llama a la función de búsqueda con la nueva categoría seleccionada

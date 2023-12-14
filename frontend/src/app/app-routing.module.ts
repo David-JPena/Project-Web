@@ -12,6 +12,10 @@ import { ListComponent } from './components/list/list.component';
 import { EditComponent } from './components/edit/edit.component';
 import { DetailsComponent } from './components/details/details.component';
 import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
+import { SuggestedUsersComponent } from './components/suggested-users/suggested-users.component';
+import { FollowingUsersComponent } from './components/following-users/following-users.component';
 
 const routes: Routes = [
   {
@@ -56,7 +60,23 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
-  }
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
+  },
+  {
+    path: 'profile/:userId',
+    component: ProfileDetailsComponent
+  },
+  {
+    path: 'suggested-users',
+    component: SuggestedUsersComponent
+  },
+  {
+    path: 'following-users',
+    component: FollowingUsersComponent  // Asegúrate de crear este componente
+  },
 ];
 
 @NgModule({

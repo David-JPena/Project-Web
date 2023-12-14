@@ -82,41 +82,152 @@ router.get('/private', verifyToken, (req, res) => {
 });
 
 // Ruta para obtener el ID de usuario a partir del token (usando el middleware verifyToken)
-router.get('/profile', verifyToken, (req, res) => {
-    // Respondiendo con el ID de usuario extraído del token
-    res.send(req.userId);
+router.get('/profile', verifyToken, async (req, res) => {
+    try {
+        // Obtén el usuario completo utilizando el ID extraído del token
+        const user = await User.findById(req.userId);
+
+        // Respondiendo con la información del usuario en formato JSON
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener el perfil del usuario' });
+    }
+});
+
+// Ruta para obtener el perfil de un usuario por su ID
+router.get('/profile/:userId', verifyToken, async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const userDetails = await User.findById(userId);
+
+        if (!userDetails) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        res.json({ user: userDetails });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener detalles del perfil' });
+    }
 });
 
 router.post('/follow/:userId', verifyToken, async (req, res) => {
     try {
         const { userId } = req.params;
 
-        // Verifica si el usuario a seguir existe
         const userToFollow = await User.findById(userId);
 
         if (!userToFollow) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
 
-        // Añade el usuario a seguir a la lista de seguidos
         const currentUser = await User.findById(req.userId);
+
+        if (currentUser.following.includes(userToFollow._id)) {
+            return res.status(400).json({ error: 'Ya estás siguiendo a este usuario' });
+        }
+
+        // Actualizar la lista de seguidos en la base de datos
         currentUser.following.push(userToFollow._id);
         await currentUser.save();
 
-        res.status(200).json({ message: 'Usuario seguido con éxito' });
+        res.status(200).json({ message: 'Usuario seguido con éxito', user: currentUser });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al seguir al usuario' });
     }
 });
 
-router.get('/followers', verifyToken, async (req, res) => {
+// Ruta para dejar de seguir a un usuario
+router.post('/unfollow/:userId', verifyToken, async (req, res) => {
     try {
-        const currentUser = await User.findById(req.userId).populate('following', 'email');
-        res.status(200).json({ followers: currentUser.following });
+        const { userId } = req.params;
+
+        const userToUnfollow = await User.findById(userId);
+
+        if (!userToUnfollow) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        const currentUser = await User.findById(req.userId);
+
+        if (!currentUser.following.includes(userToUnfollow._id)) {
+            return res.status(400).json({ error: 'No estás siguiendo a este usuario' });
+        }
+
+        // Actualizar la lista de seguidos en la base de datos
+        currentUser.following = currentUser.following.filter(followedUser => followedUser.toString() !== userToUnfollow._id.toString());
+        await currentUser.save();
+
+        res.status(200).json({ message: 'Dejaste de seguir a este usuario', user: currentUser });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error al obtener seguidores' });
+        res.status(500).json({ error: 'Error al dejar de seguir al usuario' });
+    }
+});
+
+router.get('/followers', verifyToken, async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.userId);
+
+        // Obtén la lista de todos los usuarios que no son el usuario actual ni aquellos a los que ya sigue
+        const usersToFollow = await User.find({
+            _id: { $ne: req.userId, $nin: currentUser.following }
+        }).select('email');
+
+        // Marcar cuáles de estos usuarios están siendo seguidos por el usuario actual
+        const usersWithFollowingStatus = usersToFollow.map(user => ({
+            ...user.toObject(),
+            isFollowing: currentUser.following.includes(user._id)
+        }));
+
+        res.status(200).json({ users: usersWithFollowingStatus });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener usuarios para seguir' });
+    }
+});
+
+// Ruta para obtener todos los usuarios (públicos)
+router.get('/all-users', verifyToken, async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.userId);
+
+        // Obtén la lista de todos los usuarios excluyendo al usuario actual y aquellos a los que ya sigue
+        const usersToDisplay = await User.find({
+            _id: { $ne: req.userId, $nin: currentUser.following }
+        }).select('email');
+
+        // Obtén la lista de usuarios que el usuario actual sigue y agrégales al final
+        const usersAlreadyFollowing = await User.find({
+            _id: { $in: currentUser.following }
+        }).select('email');
+
+        // Combina ambas listas para mostrar primero los usuarios que puede seguir y al final los que ya sigue
+        const allUsers = usersToDisplay.concat(usersAlreadyFollowing);
+
+        res.status(200).json({ users: allUsers });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener todos los usuarios' });
+    }
+});
+
+// Ruta para obtener los usuarios seguidos por el usuario actual
+router.get('/following', verifyToken, async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.userId);
+
+        // Obtén la lista de usuarios que el usuario actual sigue
+        const followingUsers = await User.find({
+            _id: { $in: currentUser.following }
+        }).select('email');
+
+        res.status(200).json({ users: followingUsers });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener usuarios seguidos' });
     }
 });
 
