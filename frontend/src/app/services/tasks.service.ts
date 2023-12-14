@@ -30,7 +30,11 @@ export class TasksService {
   getAllServices(): Observable<any[]> {
     return this.http.get<any[]>(this.recipeUrl);
   }
-  
+  getServicesAll(): Observable<any[]> {
+    const url = `${this.recipeUrl}/all`;
+    return this.http.get<any[]>(url);
+}
+
 
   getServiceById(id: string): Observable<any> {
     return this.http.get<any>(`${this.recipeUrl }/${id}`);
@@ -45,15 +49,15 @@ export class TasksService {
     return this.http.put<any>(`${this.recipeUrl }/${id}`, data);
   }
 
-  agregarComentario(idServicio: string, comentario: any): Observable<any> {
-    const url = `${this.recipeUrl}/${idServicio}/comments`;
-    return this.http.post<any>(url, comentario);
+  addComment(serviceId: string, text: string): Observable<any> {
+    const commentData = { text };
+    return this.http.post(`${this.recipeUrl}/${serviceId}/comments`, commentData);
   }
+
   
-  
-  getComentarios(idServicio: string): Observable<any> {
-    const url = `${this.recipeUrl}/${idServicio}/comments`;
-    return this.http.get(url);
+  // Nuevo método para obtener comentarios
+  getComments(serviceId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.recipeUrl}/${serviceId}/comments`);
   }
 
   // En el servicio Angular

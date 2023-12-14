@@ -1,6 +1,7 @@
 const { Service: serviceModel } = require("../models/serviceModel");
 const fs = require('fs').promises;
 const path = require('path');
+const mongoose = require('mongoose');
 const services = {
     create: async (req, res) => {
         try {
@@ -14,6 +15,7 @@ const services = {
             steps: req.body.steps,
             image: file.filename,
             imageUrl: `${req.protocol}://${req.get('host')}/${file.filename}`,
+            createdBy: req.userId,
         };
 
         const response = await serviceModel.create(serviceData);
@@ -125,74 +127,99 @@ const services = {
         }
     },
     
-    addComment: async (req, res) => {
-    try {
-        const id = req.params.id;
-        const { user, text } = req.body;
-
-        if (!user || !text) {
-        return res.status(400).json({ error: 'Se requieren tanto el usuario como el texto del comentario.' });
+     addComment : async (req, res) => {
+        try {
+            const id = req.params.id;
+            const { text } = req.body;
+    
+            // Validar el ID del servicio
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                return res.status(400).json({ success: false, error: 'ID de servicio no válido.' });
+            }
+    
+            // Obtener el objeto de usuario autenticado
+            const user = req.userId; // Asumiendo que tienes el ID de usuario disponible
+    
+            // Validar la presencia de usuario y texto del comentario
+            if (!user || !text) {
+                return res.status(400).json({ success: false, error: 'Se requiere tanto el usuario como el texto del comentario.' });
+            }
+    
+            // Buscar el servicio por ID
+            const service = await serviceModel.findById(id);
+    
+            if (!service) {
+                return res.status(404).json({ success: false, error: "Servicio no encontrado." });
+            }
+    
+            // Agregar el comentario al servicio y guardar
+            service.comments.push({ user, text });
+            await service.save();
+    
+            // Obtener el comentario recién agregado
+            const newComment = service.comments[service.comments.length - 1];
+    
+            // Respuesta exitosa con el nuevo comentario
+            res.status(201).json({ success: true, msg: "Comentario agregado con éxito.", comment: newComment });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ success: false, error: "Error interno del servidor" });
         }
-
-        const service = await serviceModel.findById(id);
-
-        if (!service) {
-        return res.status(404).json({ msg: "Servicio no encontrado." });
-        }
-
-        // Asegúrate de que estás utilizando el método push correctamente
-        service.comments.push({ user, text });
-
-        // Guarda el servicio después de agregar el comentario
-        await service.save();
-
-        // Devuelve el comentario recién agregado en la respuesta
-        const newComment = service.comments[service.comments.length - 1];
-
-        res.status(201).json({ msg: "Comentario agregado con éxito.", comment: newComment });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error interno del servidor" });
-    }
-
     },
+    
 
     // En el controlador
     addLike: async (req, res) => {
-    try {
-        const id = req.params.id;
-        const service = await serviceModel.findById(id);
-
-        if (!service) {
-        return res.status(404).json({ msg: "Servicio no encontrado." });
+        try {
+            const id = req.params.id;
+            const service = await serviceModel.findById(id);
+    
+            if (!service) {
+                return res.status(404).json({ msg: "Servicio no encontrado." });
+            }
+    
+            // Incrementa los "me gusta" y guarda el servicio
+            service.likes += 1;
+            await service.save();
+    
+            res.status(200).json({ msg: "Me gusta agregado con éxito.", likes: service.likes });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Error interno del servidor" });
         }
-
-        // Incrementa los "me gusta" y guarda el servicio
-        service.likes += 1;
-        await service.save();
-
-        res.status(200).json({ msg: "Me gusta agregado con éxito.", likes: service.likes });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error interno del servidor" });
-    }
     },
+    
+    
+    
 
-
-    getLikes:async (req, res) => {
-    try {
-        const id = req.params.id;
-        const service = await serviceModel.findById(id);
-
-        if (!service) {
-            return res.status(404).json({ msg: "Servicio no encontrado." });
+    addLike : async (req, res) => {
+        try {
+            const serviceId = req.params.id;
+            const userId = req.userId;
+    
+            const service = await serviceModel.findById(serviceId);
+    
+            if (!service) {
+                return res.status(404).json({ msg: "Servicio no encontrado." });
+            }
+    
+            // Verifica si el usuario ya dio "Me gusta"
+            if (service.likesBy.includes(userId)) {
+                return res.status(400).json({ msg: "Ya has dado Me gusta a este servicio." });
+            }
+    
+            // Agrega el ID del usuario a la lista de "Me gusta" y guarda el servicio
+            service.likesBy.push(userId);
+            // Incrementa el contador de "Me gusta"
+            service.likes += 1;
+    
+            await service.save();
+    
+            res.status(200).json({ msg: "Me gusta agregado con éxito.", likes: service.likes });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Error interno del servidor" });
         }
-
-        res.json({ service, likes: service.likes });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error interno del servidor" });
-    }
     },
 
     
@@ -241,7 +268,16 @@ const services = {
             res.status(500).json({ error: "Error interno del servidor" });
         }
     },
-    
+    getUserServices: async (req, res) => {
+        try {
+            const userId = req.userId; // ID del usuario actual
+            const userServices = await serviceModel.find({ createdBy: userId });
+            res.json(userServices);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Error interno del servidor" });
+        }
+    }
       
 };
 

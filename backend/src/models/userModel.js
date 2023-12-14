@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
     
     // Campo 'password' de tipo String para almacenar la contraseña del usuario
     password: String,
-    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] // Referencia a otros usuarios que sigue
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Referencia a otros usuarios que sigue
+    createdRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
 }, {
     // Opciones adicionales del esquema: activa la marca de tiempo (timestamps) para los campos 'createdAt' y 'updatedAt'
     timestamps: true

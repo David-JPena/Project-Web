@@ -19,12 +19,14 @@ export class HomeComponent implements OnInit {
   constructor(private apiService: TasksService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getAllServices();
-    this.restoreLikesFromStorage();
-  }
+    // Obtener todos los servicios
+    this.getServicesAll();
 
-  getAllServices(): void {
-    this.apiService.getAllServices().subscribe(response => {
+    // Obtener servicios del usuario (puedes llamar a esto en otra parte según tus necesidades)
+    // this.getUserServices();
+  }
+  getServicesAll(): void {
+    this.apiService.getServicesAll().subscribe(response => {
       this.services = response;
     });
   }
@@ -102,7 +104,7 @@ export class HomeComponent implements OnInit {
       );
     } else {
       // Si el término de búsqueda está vacío, obtén todos los servicios
-      this.getAllServices();
+      this.getServicesAll();
     }
   }
   searchByCategory(): void {
@@ -116,7 +118,7 @@ export class HomeComponent implements OnInit {
         }
       );
     } else {
-      this.getAllServices();
+      this.getServicesAll();
     }
   }
   selectCategory(category: string): void {
