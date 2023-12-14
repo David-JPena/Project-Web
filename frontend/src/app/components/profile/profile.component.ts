@@ -13,6 +13,9 @@ export class ProfileComponent implements OnInit {
   user: any;
   isFollowing: boolean = false;
   isOwnProfile: boolean = false;
+  isEditMode: boolean = false; // Nuevo
+
+  editedUser: any = {}; // Nuevo
 
   constructor(
     private authService: AuthService,
@@ -27,7 +30,19 @@ export class ProfileComponent implements OnInit {
         this.user = res;
         this.isOwnProfile = this.authService.getUserId() === this.user._id;
 
-        // Verifica si la propiedad 'followers' existe antes de usarla
+        // Verifica si las nuevas propiedades existen antes de usarlas
+        if (this.user.name) {
+          console.log('Nombre: ', this.user.name);
+        }
+
+        if (this.user.image) {
+          console.log('Imagen: ', this.user.image);
+        }
+
+        if (this.user.description) {
+          console.log('Descripción: ', this.user.description);
+        }
+
         if (this.user.followers) {
           console.log('Seguidores: ', this.user.followers.length);
         }
@@ -68,6 +83,63 @@ export class ProfileComponent implements OnInit {
   showFollowingUsers() {
     // Redirigir a la página que muestra los usuarios seguidos
     this.router.navigate(['/following-users']);
+  }
+
+  loadUserProfile() {
+    this.profileService.getUserProfileDetails().subscribe(
+      (res: any) => {
+        this.user = res;
+        this.isOwnProfile = this.authService.getUserId() === this.user._id;
+
+        // Verifica si las nuevas propiedades existen antes de usarlas
+        if (this.user.name) {
+          console.log('Nombre: ', this.user.name);
+        }
+
+        if (this.user.image) {
+          console.log('Imagen: ', this.user.image);
+        }
+
+        if (this.user.description) {
+          console.log('Descripción: ', this.user.description);
+        }
+
+        if (this.user.followers) {
+          console.log('Seguidores: ', this.user.followers.length);
+        }
+
+        // Copiar los valores actuales del usuario a editedUser
+        this.editedUser = { ...this.user };
+
+        // Desactivar el modo de edición al cargar el perfil
+        this.isEditMode = false;
+      },
+      (err: any) => console.log(err)
+    );
+  }
+
+  // Nuevo método para activar el modo de edición
+  enterEditMode() {
+    console.log('Entrando en modo de edición');
+    this.isEditMode = true;
+    // Copiar los valores actuales del usuario a editedUser
+    this.editedUser = { ...this.user };
+  }
+
+  // Nuevo método para guardar los cambios
+  saveChanges() {
+    // Lógica para guardar los cambios en el servidor (usando tu servicio)
+    this.profileService.updateUserProfile(this.editedUser).subscribe(
+      (res) => {
+        console.log('Cambios guardados correctamente');
+        // Desactivar el modo de edición
+        this.isEditMode = false;
+      },
+      (err) => {
+        console.error('Error al guardar cambios:', err);
+        // Manejar el error según sea necesario
+      }
+    );
   }
 
 }

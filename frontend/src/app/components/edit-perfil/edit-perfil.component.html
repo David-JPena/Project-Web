@@ -1,0 +1,14 @@
+<p>edit-perfil works!</p>
+<form (ngSubmit)="saveChanges()">
+  <!-- Tus campos de formulario aquí, por ejemplo: -->
+  <label for="name">Nombre:</label>
+  <input type="text" id="name" name="name" [(ngModel)]="editedUser.name">
+
+  <label for="description">Descripción:</label>
+  <textarea id="description" name="description" [(ngModel)]="editedUser.description"></textarea>
+
+  <label for="image">Imagen URL:</label>
+  <input type="text" id="image" name="image" [(ngModel)]="editedUser.image">
+
+  <button type="submit">Guardar Cambios</button>
+</form>

@@ -25,7 +25,7 @@ const serviceSchema = new Schema({
     },
     
     steps: { 
-        type: [String], 
+        type: [], 
         required: true 
     },
     
@@ -33,33 +33,61 @@ const serviceSchema = new Schema({
         type: String,
         require: true
     },
-
+    origin: {
+        type: String,
+        require: true
+    },
     publicationDate: {
         type: Date,
         required: true,
         default: Date.now // Establecer la fecha actual por defecto al crear la receta
     },
 
-    likes: { 
-        type: Number, 
-        default: 0 
+    likes: {
+        type: Number,
+        default: 0,
     },
 
-    comments: [{
-        user: {
+    likesBy: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+
+    // comments: [{
+    //     user: {
+    //         type: Schema.Types.ObjectId,
+    //         ref: 'User',
+    //         required: true
+    //     },
+    //     text: {
+    //         type: String,
+    //         required: true
+    //     },
+    //     date: {
+    //         type: Date,
+    //         default: Date.now,
+    //         required: false // Hacer la fecha de comentario opcional
+    //     }
+    // }],
+
+    comments: [
+        {
+          user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+          },
+          text: {
             type: String,
-            required: true
-        },
-        text: {
-            type: String,
-            required: true
-        },
-        date: {
+            required: true,
+          },
+          date: {
             type: Date,
             default: Date.now,
-            required: false // Hacer la fecha de comentario opcional
-        }
-    }]
+            required: false,
+          },
+        },
+      ],
+  
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+
     
 },
 

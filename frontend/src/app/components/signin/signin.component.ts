@@ -52,6 +52,4 @@ export class SigninComponent implements OnInit {
     container.classList.toggle('right-panel-active');
   }
   
-
-
 }

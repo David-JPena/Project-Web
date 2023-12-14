@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../../services/tasks.service';
 import { ActivatedRoute } from '@angular/router';
-
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-details',
@@ -11,92 +11,79 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent implements OnInit {
-  idServicio: string = ''; // Asigna un valor predeterminado
-  nuevoComentario: any = { user: '', text: '' };
-  comentarios: any[] = [];
+  serviceId: string | null = null; // Inicializa como nulo
+  comments: any[] = [];
+  newCommentText: string = ''; // Agrega la propiedad 'newCommentText'
   likes: number = 0;
   services: any[] = [];
+  user: any;
+  constructor(private serviceService: TasksService,  private profileService: ProfileService, private route: ActivatedRoute) { }
 
-  constructor( public apiService: TasksService, private route: ActivatedRoute) {}
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.serviceId = params.get('id') ?? null;
+      this.loadComments();
 
-// details.component.ts
+    });
 
-ngOnInit(): void {
-  // Recupera la ID del servicio de la ruta
-  this.route.paramMap.subscribe(params => {
-    this.idServicio = params.get('id') || ''; // Utiliza el valor predeterminado si no se encuentra la ID
-    console.log('ID del Servicio:', this.idServicio);
+    // Recupera la información del servicio al inicializar
+    this.loadServiceInfo();
+    this.profileService.getUserProfileDetails().subscribe(
+      (res: any) => {
+        this.user = res;
+      
 
-    if (this.idServicio) {
-      this.apiService.getServiceById(this.idServicio).subscribe(
+      },
+      (err: any) => console.log(err)
+    );
+  }
+
+  loadServiceInfo(): void {
+    if (this.serviceId) {
+      this.serviceService.getServiceById(this.serviceId).subscribe(
         (data) => {
           this.services = [data]; // Puedes necesitar ajustar esto según la estructura de tu servicio
-          this.cargarComentarios();
-          // this.actualizarLikes();
+          this.loadComments();
+          // this.updateLikes();
         },
         (error) => {
           console.error('Error al obtener información del servicio', error);
         }
       );
     }
-  });
-}
-
-
-  cargarComentarios(): void {
-    this.apiService.getComentarios(this.idServicio).subscribe(
-      (data) => {
-        this.comentarios = data;
-      },
-      (error) => {
-        console.error('Error al cargar comentarios', error);
-      }
-    );
   }
- // En el método agregarComentario()
-agregarComentario(): void {
-  this.apiService.agregarComentario(this.idServicio, this.nuevoComentario).subscribe(
-      (respuesta) => {
-          console.log('Comentario agregado con éxito', respuesta);
-          // Limpiar el formulario y recargar los comentarios y likes
-          this.nuevoComentario = { user: '', text: '' };
-          this.cargarComentarios();
-      
-      },
-      (error) => {
-          console.error('Error al agregar comentario', error);
-      }
-  );
-}
 
-  // En el componente Angular
-//   darMeGusta(): void {
-//     this.apiService.addLike(this.idServicio).subscribe(
-//         (respuesta) => {
-//             console.log('Me gusta agregado con éxito', respuesta);
-//             // this.actualizarLikes();
-//         },
-//         (error) => {
-//             console.error('Error al agregar me gusta', error);
-//         }
-//     );
-// }
+  loadComments(): void {
+    if (this.serviceId) {
+      this.serviceService.getComments(this.serviceId).subscribe(data => {
+        this.comments = data;
+      });
+    }
+  }
 
-actualizarLikes(): void {
-    this.apiService.getLikes(this.idServicio).subscribe(
-        (respuesta) => {
-            this.likes = respuesta.likes;
-        },
-        (error) => {
-            console.error('Error al obtener la cantidad de me gusta', error);
-        }
-    );
-}
-getImageUrl(imageName: string): string {
-  const imageUrl = `http://localhost:3000/uploads/${imageName}`;
-  console.log('Image URL:', imageUrl);
-  return imageUrl;
-}
+  addComment(): void {
+    if (this.serviceId && this.newCommentText) {
+      this.serviceService.addComment(this.serviceId, this.newCommentText).subscribe(() => {
+        this.loadComments();
+        this.newCommentText = ''; // Limpiar el campo después de agregar el comentario
+      });
+    }
+  }
 
+  // updateLikes(): void {
+  //   this.serviceService.getLikes(this.serviceId).subscribe(
+  //     (respuesta) => {
+  //       this.likes = respuesta.likes;
+  //     },
+  //     (error) => {
+  //       console.error('Error al obtener la cantidad de me gusta', error);
+  //     }
+  //   );
+  // }
 
+  getImageUrl(imageName: string): string {
+    const imageUrl = `http://localhost:3000/uploads/${imageName}`;
+    console.log('Image URL:', imageUrl);
+    return imageUrl;
+  }
 }
