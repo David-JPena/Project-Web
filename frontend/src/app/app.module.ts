@@ -18,7 +18,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ListComponent } from './components/list/list.component';
 import { DetailsComponent } from './components/details/details.component';
 import { FooderComponent } from './components/fooder/fooder.component';
-
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
+import { SuggestedUsersComponent } from './components/suggested-users/suggested-users.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,10 @@ import { FooderComponent } from './components/fooder/fooder.component';
     ListComponent,
     DetailsComponent,
     FooderComponent,
-   
+    ProfileComponent,
+    ProfileDetailsComponent,
+    SuggestedUsersComponent,
+
   ],
   imports: [
     BrowserModule,

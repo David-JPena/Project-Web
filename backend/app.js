@@ -2,9 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const connectDB = require('./src/config/db');
-//const userRoutes = require('./src/routes/userRoutes');
 const cors = require('cors');
-
 
 // Manejo de errores en connectDB
 try {
@@ -21,9 +19,6 @@ app.use('/uploads', express.static(uploadsPath));
 
 const routes = require("./src/routes/router");
 app.use("/api", routes);
-
-// Rutas de usuario
-//app.use('/api', userRoutes);
 
 // Manejo de errores 404
 app.use((req, res) => {

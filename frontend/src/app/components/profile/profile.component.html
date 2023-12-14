@@ -1,0 +1,7 @@
+<div *ngIf="user">
+  <h2>Perfil de {{ user.email }}</h2>
+  <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()">Personas que quizas conoscan</button>
+
+  <!-- Otras secciones del perfil aquí -->
+
+</div>

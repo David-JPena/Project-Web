@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { catchError } from 'rxjs/operators';
 export class AuthService {
 
   private URL = 'http://localhost:3000/api';
+  private userId: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -45,4 +47,34 @@ export class AuthService {
     localStorage.removeItem('token');
     this.router.navigate(['/signin'])
   }
+
+  getUserId(): string | null {
+    return this.userId;
+  }
+
+  getProfile() {
+    return this.http.get<any>(this.URL + '/profile')
+      .pipe(
+        catchError(error => {
+          console.error('Error al obtener el perfil:', error);
+          throw error;
+        })
+      );
+  }
+
+  followUser(userId: string) {
+    return this.http.post<any>(`${this.URL}/follow/${userId}`, {})
+      .pipe(
+        catchError(error => {
+          console.error('Error al seguir al usuario:', error);
+          throw error;
+        })
+      );
+  }
+
+  unfollowUser(userId: string): Observable<any> {
+    const url = `${this.URL}/unfollow/${userId}`;
+    return this.http.post<any>(url, {});
+  }
+
 }

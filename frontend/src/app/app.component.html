@@ -34,7 +34,7 @@
           <a class="nav-link active font-weight-bold" aria-current="page" routerLink="/list" routerLinkActive="active">Lista de recetas</a>
         </li>
       </ul>
-      
+
       <ul class="navbar-nav ml-auto">
         <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
           <li class="nav-item">
@@ -46,6 +46,9 @@
         </ng-container>
         <ng-template #loggedIn>
           <li class="nav-item">
+            <a class="nav-link" routerLink="/profile" routerLinkActive="active">Perfil</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link font-weight-bold" style="cursor: pointer;" (click)="authService.logout()">Salir</a>
           </li>
         </ng-template>
@@ -53,8 +56,6 @@
     </div>
   </div>
 </nav>
-
-
 
 <div class="container p-5">
   <router-outlet></router-outlet>
