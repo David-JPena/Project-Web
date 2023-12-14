@@ -33,14 +33,11 @@ export class TasksService {
   getAllServices(): Observable<any[]> {
     return this.http.get<any[]>(this.recipeUrl);
   }
-<<<<<<< HEAD
   getServicesAll(): Observable<any[]> {
     const url = `${this.recipeUrl}/all`;
     return this.http.get<any[]>(url);
 }
 
-=======
->>>>>>> e238eaebfafb01e34435408fb8f07dc88f10ab88
 
   getServiceById(id: string): Observable<any> {
     return this.http.get<any>(`${this.recipeUrl}/${id}`);
@@ -59,16 +56,10 @@ export class TasksService {
     return this.http.post(`${this.recipeUrl}/${serviceId}/comments`, commentData);
   }
 
-<<<<<<< HEAD
   
   // Nuevo método para obtener comentarios
   getComments(serviceId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.recipeUrl}/${serviceId}/comments`);
-=======
-  getComentarios(idServicio: string): Observable<any> {
-    const url = `${this.recipeUrl}/${idServicio}/comments`;
-    return this.http.get(url);
->>>>>>> e238eaebfafb01e34435408fb8f07dc88f10ab88
   }
 
   addLike(serviceId: string): Observable<any> {

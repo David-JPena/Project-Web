@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ export class HomeComponent implements OnInit {
   services: any[] = [];
   searchTerm: string = '';
   selectedCategory: string = '';
+  
   categories: { name: string; checked: boolean }[] = [
     { name: 'Desayuno', checked: false },
     { name: 'Almuerzo', checked: false },
@@ -22,7 +24,7 @@ export class HomeComponent implements OnInit {
     { name: 'Postres', checked: false },
   ];
 
-  constructor(private apiService: TasksService, private router: Router) {}
+  constructor(private apiService: TasksService, private router: Router, private profileService:ProfileService) {}
 
   ngOnInit(): void {
     // Obtener todos los servicios

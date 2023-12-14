@@ -25,7 +25,7 @@ const serviceSchema = new Schema({
     },
     
     steps: { 
-        type: [String], 
+        type: [], 
         required: true 
     },
     
@@ -33,7 +33,10 @@ const serviceSchema = new Schema({
         type: String,
         require: true
     },
-
+    origin: {
+        type: String,
+        require: true
+    },
     publicationDate: {
         type: Date,
         required: true,

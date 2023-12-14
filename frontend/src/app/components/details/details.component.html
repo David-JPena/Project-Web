@@ -4,7 +4,6 @@
   <p>No se ha seleccionado ningún servicio.</p>
 </ng-template>
 
-<<<<<<< HEAD
 <div *ngIf="serviceId; else noServiceDetails" clas>
   <div *ngFor="let service of services">
     <div
@@ -12,131 +11,15 @@
       style="box-shadow: 0px 10px 15px -5px rgba(0, 0, 0, 0.2)"
     >
       <div class="container ms-12">
-=======
-<!DOCTYPE html>
-<html>
-  <head> </head>
-
-  <body *ngIf="idServicio; else noServiceDetails">
-    <div *ngFor="let service of services">
-      <div
-        class="b pt-5"
-        style="box-shadow: 0px 10px 15px -5px rgba(0, 0, 0, 0.2)"
-      >
-        <div class="container ms-12">
-          <div class="row">
-            <div class="col-md-8 p-0">
-              <div class="card mb-4 p-2">
-                <img
-                  [src]="getImageUrl(service.image)"
-                  class="card-img-top"
-                  alt="Imagen de la tarjeta 1"
-                  style="
-                    width: 100%;
-                    max-height: 400px;
-                    image-rendering: pixelated;
-                  "
-                />
-                <h2>{{ service.name }}</h2>
-                <div class="col-md-12">
-                  <div class="mb-4 pt-3">
-                    <div class="row ms-5">
-                      <div class="col-md-2">
-                        <img
-                          src="assets/images/usuario.jpg"
-                          alt="Foto de perfil"
-                          class="rounded-circle"
-                          style="width: 60px; height: 60px"
-                        />
-                      </div>
-                      <div class="col-md-10 perfil">
-                        <h6>Juan Perez</h6>
-                        <p>Perú</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <hr class="mb-4" style="border-color: gray" />
-                  <div class="text-center mt-3">
-                    <i class="bi bi-hand-thumbs-up me-3"></i>
-                    <!-- Icono de "Me gusta" -->
-                    <i class="bi bi-heart me-3"></i>
-                    <!-- Icono de "Me encanta" -->
-                    <i class="bi bi-chat-dots me-3"></i>
-                    <!-- Icono de chat -->
-                    <button class="btn btn-success">Seguir</button>
-                    <!-- Botón para seguir -->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <h5 class="text-primary">Cometarios:</h5>
-              <div class="card mb-4 p-1" style="width: 300px">
-                <ul>
-                  <li *ngFor="let comentario of comentarios">
-                    <p><strong>{{ comentario.user }}</strong>: {{ comentario.text }}</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-      <div class="container mt-4">
->>>>>>> e238eaebfafb01e34435408fb8f07dc88f10ab88
         <div class="row">
           <div class="col-md-8 p-0 ps-5">
             <div class="card mb-4">
-<<<<<<< HEAD
               <img
                 [src]="getImageUrl(service.image)"
                 class="card-img-top"
                 alt="Imagen de la tarjeta "
                 style="
                   width: 100%;
-=======
-              <div class="card-body">
-                <h2 class="card-title">Descripción de la Receta</h2>
-                <p>{{ service.description }}</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="card mb-4">
-              <div class="card-body">
-                <h2 class="card-title">Ingredientes</h2>
-                <ul class="list-unstyled" >
-                  <li *ngFor="let ingredient of service.ingredients; let i = index">
-                    {{ i + 1 }}. {{ ingredient.trim() }}
-                    <hr style="border-top: 1px dotted rgb(36, 35, 35)" />
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="card mb-4">
-              <div class="card-body">
-                <h2 class="card-title">Pasos</h2>
-                <ol class="list-unstyled">
-                  <li *ngFor="let step of service.steps; let i = index">
-                    <div class="row mb-2">
-                      <div class="col-1">
-                        <div class="circle blue-bg">{{ i + 1 }}</div>
-                      </div>
-                      <div class="col">
-                        <span>{{ step.trim() }}</span>
-                      </div>
-                    </div>
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
->>>>>>> e238eaebfafb01e34435408fb8f07dc88f10ab88
 
                   max-height: 400px;
                   image-rendering: pixelated;
@@ -155,11 +38,10 @@
                       />
                     </div>
                     <div class="col-md-10">
-                      <h6>Juan Perez</h6>
-                      <p>Perú</p>
+                      <h6>{{ user.email }}</h6>
+                      <p>{{service.origin}}</p>
                     </div>
                   </div>
-<<<<<<< HEAD
                 </div>
               </div>
               <div class="col-md-12">
@@ -174,19 +56,6 @@
                   <button class="btn btn-success">Seguir</button>
                  
                 </div> -->
-=======
-          
-                  <div class="form-group">
-                    <label for="textoComentario">Comentario:</label>
-                    <textarea class="form-control" id="textoComentario" name="text" [(ngModel)]="nuevoComentario.text" required></textarea>
-                  </div>
-          
-                  <button type="submit" class="button" [disabled]="!commentForm.valid">Agregar Comentario</button>
-                </form>
-          
-                <!-- Lista de comentarios -->
-                
->>>>>>> e238eaebfafb01e34435408fb8f07dc88f10ab88
               </div>
             </div>
           </div>
@@ -200,7 +69,7 @@
           
                 <li *ngFor="let comment of comments" class="list-group-item">
                 
-                    <strong>{{comment.user}}</strong>
+                    <strong>{{ user.email }}</strong>
                     <p>{{comment.text}}</p>
                     <div>
                     <small>Fecha: {{comment.date | date : "dd-MM-yyyy"}}</small>
@@ -231,16 +100,16 @@
             <div class="card-body">
               <h2 class="card-title">Ingredientes</h2>
               <ul class="list-unstyled">
-                <li
-                  *ngFor="let ingredient of service.ingredients; let i = index"
-                >
-                  {{ i + 1 }}. {{ ingredient.trim() }}
-                  <hr style="border-top: 1px dotted rgb(36, 35, 35)" />
+                <li *ngFor="let ingredient of service.ingredients; let i = index">
+                  {{ i + 1 }}. {{ ingredient }}
                 </li>
               </ul>
             </div>
           </div>
         </div>
+        
+        
+        
         <div class="col-md-6">
           <div class="card mb-4">
             <div class="card-body">

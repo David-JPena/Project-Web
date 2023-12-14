@@ -25,51 +25,6 @@
 <body class="background-color">
   <div class="container" id="container">
  
-<<<<<<< HEAD
-  <div class="form-container sign-up-container">
-    <form action="#" (submit)="signUp()">
-      <h1>Create Account</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-      <span>or use your email for registration</span>
-      <input type="email" [(ngModel)]="user.email" name="email" class="form-control" placeholder="Email" required autofocus />
-      <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Contraseña" required />
-      <button type="submit"  (click)="toggleForm()">Sign Up</button>
-    </form>
-  </div>
-
-
-  <div class="form-container sign-in-container">
-    <form (submit)="signIn()">
-      <h1>Sign in</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-      <span>or use your account</span>
-      <input type="email" [(ngModel)]="user.email" name="email" class="form-control" placeholder="Email" required autofocus />
-      <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Password" required />
-      <a href="#">Forgot your password?</a>
-      <button>Sign In</button>
-    </form>
-  </div>
-
-  <div class="overlay-container" >
-    <div class="overlay">
-      <div class="overlay-panel overlay-left">
-        <h1>Welcome Back!</h1>
-        <p>To keep connected with us, please login with your personal info</p>
-        <button class="ghost" id="signIn"  (click)="toggleForm()">Sign In</button>
-      </div>
-      <div class="overlay-panel overlay-right">
-        <h1>Hello, Friend!</h1>
-        <p>Enter your personal details and start the journey with us</p>
-        <button class="ghost" id="signUp"  type="button" (click)="toggleForm()">Sign Up</button>
-=======
     <div class="form-container sign-up-container">
       <form action="#" (submit)="signUp()">
         <h1>Crear tu cuenta</h1>
@@ -114,7 +69,6 @@
           <p>Introduce tus datos personales</p>
           <button class="ghost" id="signUp"  type="button" (click)="toggleForm()">Inscribirse</button>
         </div>
->>>>>>> e238eaebfafb01e34435408fb8f07dc88f10ab88
       </div>
     </div>
   </div>

@@ -11,10 +11,11 @@ const services = {
             name: req.body.name,
             description: req.body.description,
             categories:req.body.categories,
-            ingredients: req.body.ingredients,
-            steps: req.body.steps,
+            ingredients: req.body.ingredients.split(',').map(ingredient => ingredient.trim()),
+            steps: req.body.steps.split(',').map(step => step.trim()),
             image: file.filename,
             imageUrl: `${req.protocol}://${req.get('host')}/${file.filename}`,
+            origin: req.body.origin,
             createdBy: req.userId,
         };
 
@@ -91,7 +92,8 @@ const services = {
             ingredients: req.body.ingredients,
             steps: req.body.steps,
             categories: req.body.categories,
-            image: imagePath, // Usa el nuevo nombre de archivo si hay uno, de lo contrario, mantén el existente
+            image: imagePath, // Usa el nuevo
+            origin: req.body.origin,
         };
     
         const updatedService = await serviceModel.findByIdAndUpdate(id, service, { new: true });

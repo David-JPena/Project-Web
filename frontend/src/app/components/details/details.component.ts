@@ -3,6 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../../services/tasks.service';
 import { ActivatedRoute } from '@angular/router';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-details',
@@ -15,17 +16,26 @@ export class DetailsComponent implements OnInit {
   newCommentText: string = ''; // Agrega la propiedad 'newCommentText'
   likes: number = 0;
   services: any[] = [];
-
-  constructor(private serviceService: TasksService, private route: ActivatedRoute) { }
+  user: any;
+  constructor(private serviceService: TasksService,  private profileService: ProfileService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.serviceId = params.get('id') ?? null;
       this.loadComments();
+
     });
 
     // Recupera la información del servicio al inicializar
     this.loadServiceInfo();
+    this.profileService.getUserProfileDetails().subscribe(
+      (res: any) => {
+        this.user = res;
+      
+
+      },
+      (err: any) => console.log(err)
+    );
   }
 
   loadServiceInfo(): void {
