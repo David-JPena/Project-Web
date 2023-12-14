@@ -30,7 +30,7 @@
           <a class="nav-link active font-weight-bold" aria-current="page" routerLink="/add" routerLinkActive="active">Agregar receta</a>
         </li>
       </ul>
-      
+
       <ul class="navbar-nav" *ngIf="authService.loggedIn()">
         <li class="nav-item">
           <a class="nav-link active font-weight-bold" aria-current="page" routerLink="/list" routerLinkActive="active">Lista de recetas</a>
@@ -55,7 +55,7 @@
           <li class="nav-item">
             <a class="nav-link font-weight-bold" style="cursor: pointer;" (click)="authService.logout()">Salir</a>
           </li>
-         
+        
         </ng-template>
       </ul>
     </div>

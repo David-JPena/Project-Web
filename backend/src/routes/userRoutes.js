@@ -39,6 +39,11 @@ router.post('/signup', async (req, res) => {
 router.post('/signin', async (req, res) => {
     const { email, password } = req.body;
 
+    // Verificar que se proporcionen tanto el correo electrónico como la contraseña
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Por favor, proporciona correo electrónico y contraseña.' });
+    }
+    
     try {
         // Buscando un usuario en la base de datos con el correo electrónico proporcionado
         const user = await User.findOne({ email });
