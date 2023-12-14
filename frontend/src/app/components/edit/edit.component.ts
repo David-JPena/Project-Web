@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
+ 
   formData: any = {
     name: '',
     description: '',
@@ -25,10 +26,12 @@ export class EditComponent implements OnInit {
   constructor(
     private serviceService: TasksService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+   
   ) {}
 
   ngOnInit(): void {
+    
     const serviceId = this.route.snapshot.paramMap.get('id');
     if (serviceId) {
       this.getServiceDetails(serviceId);

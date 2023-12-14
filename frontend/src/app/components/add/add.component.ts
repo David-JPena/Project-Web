@@ -24,7 +24,8 @@ export class AddComponent {
     ingredients: [], // Inicializado con un ingrediente vacío
     steps: [] ,
     categories: "",
-    image: null // Cambiado a null para manejar archivos
+    image: null, // Cambiado a null para manejar archivos
+    origin: "",
   };
 
   constructor(private serviceService: TasksService, private router: Router) { }
@@ -39,10 +40,11 @@ export class AddComponent {
     formData.append('name', this.formData.name);
     formData.append('description', this.formData.description);
     // formData.append('price', this.formData.price.toString());
-    formData.append('ingredients', this.formData.ingredients);
-    formData.append('steps', this.formData.steps);
+    formData.append('ingredients', this.formData.ingredients.join(','));// Convertir a cadena JSON
+    formData.append('steps', this.formData.steps.join(','));
     formData.append('categories', this.formData.categories);
     formData.append('file', this.formData.image);
+    formData.append('origin', this.formData.origin);
 
     this.serviceService.createService(formData).subscribe(response => {
       console.log(response);

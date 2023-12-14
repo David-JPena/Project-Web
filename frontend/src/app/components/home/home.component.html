@@ -1,26 +1,24 @@
-
-<!-- home.component.html -->
-
-<!-- Estructura HTML con Bootstrap, botón redondeado y color azul -->
-<!-- <div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-primary ml-2 rounded" type="button">Buscar</button>
-  </div>
-</div> -->
-
-<!-- home.component.html -->
-
 <div class="container-fluid h-100">
   <div class="row h-100">
     <div class="col-md-3 mb-3">
-      <div class="card position-relative h-25" style="background-color: rgb(244, 249, 251);">
-        <div class="card-body  position-relative">
+      <div class="card position-relative h-20" style="background-color: rgb(244, 249, 251);">
+        <div class="card-body position-relative">
           <h5 class="card-title">Filtrar por Categoría</h5>
-          <select class="form-control mt-2" [(ngModel)]="selectedCategory" (ngModelChange)="searchByCategory()" style="max-height: 200px; overflow-y: auto; background-color: rgb(230, 232, 232);">
-            <option value="">Todas las Categorías</option>
-            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-          </select>
+
+          <!-- Change the select element to checkboxes -->
+          <div *ngFor="let category of categories" class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [(ngModel)]="category.checked"
+              (change)="searchByCategory()"
+              id="{{ category.name }}"
+            />
+            <label class="form-check-label" for="{{ category.name }}">
+              {{ category.name }}
+            </label>
+          </div>
+
         </div>
       </div>
     </div>

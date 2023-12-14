@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TasksService } from '../../services/tasks.service';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-home',
@@ -14,17 +15,26 @@ export class HomeComponent implements OnInit {
   services: any[] = [];
   searchTerm: string = '';
   selectedCategory: string = '';
-  categories: string[] = ['Desayuno', 'Almuerzo', 'Cena', 'Vegetariana', 'Postres'];
+  
+  categories: { name: string; checked: boolean }[] = [
+    { name: 'Desayuno', checked: false },
+    { name: 'Almuerzo', checked: false },
+    { name: 'Cena', checked: false },
+    { name: 'Vegetariana', checked: false },
+    { name: 'Postres', checked: false },
+  ];
 
-  constructor(private apiService: TasksService, private router: Router) {}
+  constructor(private apiService: TasksService, private router: Router, private profileService:ProfileService) {}
 
   ngOnInit(): void {
-    this.getAllServices();
-    this.restoreLikesFromStorage();
-  }
+    // Obtener todos los servicios
+    this.getServicesAll();
 
-  getAllServices(): void {
-    this.apiService.getAllServices().subscribe(response => {
+    // Obtener servicios del usuario (puedes llamar a esto en otra parte según tus necesidades)
+    // this.getUserServices();
+  }
+  getServicesAll(): void {
+    this.apiService.getServicesAll().subscribe(response => {
       this.services = response;
     });
   }
@@ -110,12 +120,16 @@ export class HomeComponent implements OnInit {
       );
     } else {
       // Si el término de búsqueda está vacío, obtén todos los servicios
-      this.getAllServices();
+      this.getServicesAll();
     }
   }
   searchByCategory(): void {
-    if (this.selectedCategory.trim() !== '') {
-      this.apiService.searchByCategory(this.selectedCategory).subscribe(
+    const selectedCategories = this.categories
+      .filter((category) => category.checked)
+      .map((category) => category.name);
+
+    if (selectedCategories.length > 0) {
+      this.apiService.searchByCategory(selectedCategories.join(',')).subscribe(
         (response) => {
           this.services = response;
         },
@@ -124,9 +138,10 @@ export class HomeComponent implements OnInit {
         }
       );
     } else {
-      this.getAllServices();
+      this.getServicesAll();
     }
   }
+  
   selectCategory(category: string): void {
     this.selectedCategory = category;
     this.searchByCategory();  // Llama a la función de búsqueda con la nueva categoría seleccionada
