@@ -1,4 +1,28 @@
-<body class="background-color">
+<div class="row">
+  <div class="col-md-4 mx-auto">
+    <div class="card">
+      <div class="card-header">
+        <p>Iniciar Sesion</p>
+      </div>
+      <div class="card-body">
+        <form (submit)="signIn()">
+          <div class="form-group">
+            <input type="text" [(ngModel)]="user.email" name="email" class="form-control" placeholder="Email" required
+              autofocus>
+          </div>
+          <div class="form-group">
+            <input type="password" [(ngModel)]="user.password" name="password" class="form-control"
+              placeholder="Contraseña" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block"> Iniciar Sesion
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <body class="background-color">
   <div class="container" id="container">
 
     <div class="form-container sign-up-container">
@@ -47,8 +71,4 @@
       </div>
     </div>
   </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> 74c2318ddfb3b458afc2983956df0d8eeacc74c6
-</body>
+</body> -->

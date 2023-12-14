@@ -169,27 +169,40 @@ const services = {
         }
     },
     
-
-    // En el controlador
-    addLike: async (req, res) => {
+    searchByName: async (req, res) => {
         try {
-            const id = req.params.id;
-            const service = await serviceModel.findById(id);
+          const searchTerm = req.query.name;
     
-            if (!service) {
-                return res.status(404).json({ msg: "Servicio no encontrado." });
-            }
+          // Realiza la búsqueda por nombre en el modelo de servicio
+          const results = await serviceModel.find({ name: { $regex: searchTerm, $options: 'i' } });
     
-            // Incrementa los "me gusta" y guarda el servicio
-            service.likes += 1;
-            await service.save();
-    
-            res.status(200).json({ msg: "Me gusta agregado con éxito.", likes: service.likes });
+          res.status(200).json(results);
         } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: "Error interno del servidor" });
+          console.error(error);
+          res.status(500).json({ error: 'Error interno del servidor' });
         }
-    },
+      },
+    
+    // // En el controlador
+    // addLike: async (req, res) => {
+    //     try {
+    //         const id = req.params.id;
+    //         const service = await serviceModel.findById(id);
+    
+    //         if (!service) {
+    //             return res.status(404).json({ msg: "Servicio no encontrado." });
+    //         }
+    
+    //         // Incrementa los "me gusta" y guarda el servicio
+    //         service.likes += 1;
+    //         await service.save();
+    
+    //         res.status(200).json({ msg: "Me gusta agregado con éxito.", likes: service.likes });
+    //     } catch (error) {
+    //         console.error(error);
+    //         res.status(500).json({ error: "Error interno del servidor" });
+    //     }
+    // },
     
     
     
@@ -224,31 +237,69 @@ const services = {
         }
     },
 
-    
-
-    searchByName: async (req, res) => {
+    removeLike: async (req, res) => {
         try {
-            const searchTerm = req.query.name; // asumiendo que el parámetro de búsqueda es 'name'
-            
-            if (!searchTerm) {
-                return res.status(400).json({ error: 'Se requiere un nombre para realizar la búsqueda.' });
+            const serviceId = req.params.id;
+            const userId = req.userId;
+    
+            const service = await serviceModel.findById(serviceId);
+    
+            if (!service) {
+                return res.status(404).json({ msg: "Servicio no encontrado." });
             }
     
-            // Utiliza una expresión regular para hacer la búsqueda de manera insensible a mayúsculas y minúsculas
-            const regex = new RegExp(`^${searchTerm}$`, 'i');
-    
-            const matchingServices = await serviceModel.find({ name: regex });
-    
-            if (matchingServices.length === 0) {
-                return res.status(404).json({ msg: "No se encontraron servicios con el nombre proporcionado." });
+            // Verifica si el usuario ya dio "Me gusta"
+            if (!service.likesBy.includes(userId)) {
+                return res.status(400).json({ msg: "No has dado Me gusta a este servicio." });
             }
     
-            res.status(200).json(matchingServices);
+            // Remueve el ID del usuario de la lista de "Me gusta" y guarda el servicio
+            service.likesBy = service.likesBy.filter(id => id !== userId);
+            // Decrementa el contador de "Me gusta"
+            service.likes -= 1;
+    
+            await service.save();
+    
+            res.status(200).json({ msg: "Me gusta eliminado con éxito.", likes: service.likes });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "Error interno del servidor" });
         }
     },
+    
+
+    removeLike: async (req, res) => {
+        try {
+            const serviceId = req.params.id;
+            const userId = req.userId;
+    
+            const service = await serviceModel.findById(serviceId);
+    
+            if (!service) {
+                return res.status(404).json({ msg: "Servicio no encontrado." });
+            }
+    
+            // Verifica si el usuario ya dio "Me gusta"
+            const index = service.likesBy.indexOf(userId);
+            if (index === -1) {
+                return res.status(400).json({ msg: "No has dado Me gusta a este servicio." });
+            }
+    
+            // Remueve el ID del usuario de la lista de "Me gusta"
+            service.likesBy.splice(index, 1);
+            // Decrementa el contador de "Me gusta"
+            service.likes -= 1;
+    
+            // Guarda el servicio con las modificaciones
+            await service.save();
+    
+            res.status(200).json({ msg: "Me gusta eliminado con éxito.", likes: service.likes });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Error interno del servidor" });
+        }
+    },
+    
     
     searchByCategory: async (req, res) => {
         try {

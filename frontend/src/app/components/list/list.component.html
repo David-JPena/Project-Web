@@ -1,47 +1,35 @@
-<button class="btn btn-outline-primary" (click)="navigateToAdd()">
-  Agregar
-</button>
+
+<h1 class="text-center" style="font-family: 'Arial', sans-serif; color: #3498db; text-shadow: 2px 2px 4px #666;">Mis Recetas</h1>
+
+
 <div class="row row-cols-1 row-cols-md-3 g-4">
+ 
   <div class="col" *ngFor="let service of services">
     <div class="card h-100">
-      <div class="card-body" style="background-color:  rgb(244, 249, 251);">
-        <img [src]="getImageUrl(service.image)" (click)="navigateToDetails(service._id)"
+      <div class="card-body" >
+        <img [src]="getImageUrl(service.image)"
         class="card-img-top img-fluid" alt="Imagen del servicio" style="height: 300px; object-fit: cover;">
         <h5 class="card-title">{{service.name}}</h5>
         <p class="card-text">{{service.description}}</p>
         <p class="card-text">{{service.origin}}</p>
 
-        <p class="card-text">Ingredientes:</p>
-        <ul class="list-group">
-          <li *ngFor="let ingredient of service.ingredients; let i = index" class="list-group-item">
-            {{ ingredient.trim() }}
-          </li>
-        </ul>
-
-        <p class="card-text">Pasos:</p>
-        <ol class="list-group">
-          <li *ngFor="let step of service.steps; let i = index" class="list-group-item">
-            {{ step.trim() }}
-          </li>
-        </ol>
-
         <p class="card-text">Categorias: {{ service.categories }}</p>
       </div>
 
-     
-
       <div class="card-footer" style="background-color: rgb(221, 225, 232);">
-       
-        <button class="btn btn-outline-primary" (click)="navigateToDetails(service._id)">
-          Ver Detalles
+
+        <button class="btn btn-outline-primary" style="margin-right: 10px; margin-left: 10px;" (click)="navigateToDetails(service._id)">
+            Ver Detalles
         </button>
-        <button class="btn btn-outline-danger" (click)="deleteService(service._id)">
-          Eliminar
+        <button class="btn btn-outline-danger" style="margin-right: 10px;" (click)="deleteService(service._id)">
+            Eliminar
         </button>
         <button class="btn btn-outline-warning" (click)="navigateToEdit(service._id)">
-          Editar
+            Editar
         </button>
+    
       </div>
+    
     </div>
   </div>
 </div>

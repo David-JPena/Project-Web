@@ -1,73 +1,54 @@
-<<<<<<< HEAD
-<div *ngIf="user">
-  <h2>Perfil de {{ user.name || user.email }}</h2>
+<div *ngIf="user" class="container mt-4 mb-5">
+  <div class="card text-center" >
+    <div class="card-header" style="background-color: rgb(226, 229, 230);">
+      <!-- Mostrar imagen de perfil en el encabezado -->
+      <h2>Perfil de {{ user.name || user.email }}</h2>
+    </div>
 
-  <!-- Mostrar el formulario de edición si está en modo de edición -->
-  <ng-container *ngIf="isEditMode; else viewMode">
-    <!-- Formulario de edición -->
-    <form (ngSubmit)="saveChanges()">
-      <label for="name">Nombre:</label>
-      <input type="text" id="name" name="name" [(ngModel)]="editedUser.name">
+    <div class="card-body mb-3" style="background-color: rgb(252, 252, 247);">
 
-      <label for="description">Descripción:</label>
-      <textarea id="description" name="description" [(ngModel)]="editedUser.description"></textarea>
+      <div class="col-md-12">
+        <img src="https://lapi.com.mx/web/image/product.template/5449/image_1024?unique=b4fa6e7" alt="Imagen de perfil" class="img-fluid rounded-circle" style="max-width: 250px; margin: 0 auto;">
+      </div>
 
-      <label for="image">Imagen URL:</label>
-      <input type="text" id="image" name="image" [(ngModel)]="editedUser.image">
+      <!-- Formulario de edición -->
+      <ng-container *ngIf="isEditMode; else viewMode">
+        <form (ngSubmit)="saveChanges()" class="text-left">
+          <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" [(ngModel)]="editedUser.name" class="form-control">
+          </div>
 
-      <button type="submit">Guardar Cambios</button>
-    </form>
-  </ng-container>
+          <div class="form-group">
+            <label for="description">Descripción:</label>
+            <textarea id="description" name="description" [(ngModel)]="editedUser.description" class="form-control"></textarea>
+          </div>
 
-  <!-- Vista normal -->
-  <ng-template #viewMode>
-    <!-- Mostrar imagen si existe -->
-    <p *ngIf="user.image">
-      <img *ngIf="isEditMode && editedUser.image" [src]="editedUser.image" alt="Imagen de perfil">
-    </p>
+          <div class="form-group">
+            <label for="image">Imagen URL:</label>
+            <input type="text" id="image" name="image" [(ngModel)]="editedUser.image" class="form-control">
+          </div>
 
-    <p *ngIf="user.description">Descripción: {{ user.description }}</p>
+          <button type="submit" class="btn btn-success my-3">Guardar Cambios</button>
+        </form>
+      </ng-container>
 
-    <p>Correo Electrónico: {{ user.email }}</p>
+      <!-- Vista normal -->
+      <ng-template #viewMode>
+        <p *ngIf="user.description">Descripción: {{ user.description }}</p>
 
-    <!-- Agregar el contador de seguidores si existe la propiedad followers -->
-    <p *ngIf="user.followers">Seguidores: {{ user.followers?.length }}</p>
+        <p style="font-size: 18px;">Correo Electrónico: {{ user.email }}</p>
 
-    <!-- En el botón para activar el modo de edición -->
-    <button *ngIf="isOwnProfile && !isEditMode" (click)="enterEditMode()">Editar Perfil</button>
+        <p *ngIf="user.followers">Seguidores: {{ user.followers?.length }}</p>
 
-    <button (click)="showFollowingUsers()">Ver Seguidores</button>
+        <button *ngIf="isOwnProfile && !isEditMode" (click)="enterEditMode()" class="btn btn-primary my-3 mr-5">Editar Perfil</button>
 
-    <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
+        <button (click)="showFollowingUsers()" class="btn btn-secondary my-3">Ver Seguidores</button>
 
-    <!-- Otras secciones del perfil aquí -->
-  </ng-template>
-=======
-<div class="text-center">
-  <!-- Profile Image Section -->
-  <div *ngIf="user" class="mb-4">
-    
-    <h2 class="mt-3">Perfil de {{ user.email }}</h2>
+        <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()" class=" btn btn-primary my-3 ml-5">Personas que quizás conozcan</button>
+
+        <!-- Otras secciones del perfil aquí -->
+      </ng-template>
+    </div>
   </div>
-
-  <!-- Followers Section -->
-  <div class="mb-4">
-    <p *ngIf="user.followers && user.followers.length > 0">
-      Seguidores: {{ user.followers.length }}
-    </p>
-  </div>
-
-  <!-- Show Following Users Button -->
-  <div class="mb-4">
-    <button (click)="showFollowingUsers()">Ver Seguidores</button>
-  </div>
-
-  <!-- Suggested Users Button -->
-  <div class="mb-4">
-    <button *ngIf="canFollowUser(user._id)" class="btn btn-primary" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
-  </div>
-
-  <!-- Other sections of the profile can be added here -->
-
->>>>>>> 74c2318ddfb3b458afc2983956df0d8eeacc74c6
 </div>

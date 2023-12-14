@@ -168,12 +168,12 @@
 
  .action-icons i {
      margin: 0 15px;
-     color: #007bff;
+     color: #f3f7fb;
      transition: color 0.3s ease; /* Add a smooth transition effect */
  }
 
  .action-icons i:hover {
-     color: #0056b3; /* Change the color on hover */
+     color: #f58607; /* Change the color on hover */
  }
  .footer-second-s .action-icons i {
      font-size: 1.5rem; /* Puedes ajustar este valor según tus preferencias */

@@ -1,10 +1,10 @@
-// home.component.ts
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+
 import { TasksService } from '../../services/tasks.service';
-import { ProfileService } from '../../services/profile.service';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   services: any[] = [];
   searchTerm: string = '';
   selectedCategory: string = '';
+  isHovered: boolean = false;
   
   categories: { name: string; checked: boolean }[] = [
     { name: 'Desayuno', checked: false },
@@ -24,7 +25,8 @@ export class HomeComponent implements OnInit {
     { name: 'Postres', checked: false },
   ];
 
-  constructor(private apiService: TasksService, private router: Router, private profileService:ProfileService) {}
+  constructor(private apiService: TasksService, private router: Router, private authService: AuthService) {}
+
 
   ngOnInit(): void {
     // Obtener todos los servicios
@@ -60,6 +62,7 @@ export class HomeComponent implements OnInit {
   }
   addLike(serviceId: string): void {
     const service = this.services.find(s => s._id === serviceId);
+  
     if (service) {
       if (service.liked) {
         // Si ya le diste "Me gusta", quítalo
@@ -78,51 +81,72 @@ export class HomeComponent implements OnInit {
       }
     }
   }
-  toggleSave(service: any) {
-    service.saved = !service.saved;
-    // Puedes agregar la lógica necesaria para guardar o desguardar el servicio
-  }
-  toggleLike(service: any) {
-    service.liked = !service.liked;
-    service.likes += service.liked ? 1 : -1;
-  }
+  
+  
 
   removeLike(serviceId: string): void {
     this.apiService.removeLike(serviceId).subscribe(
-      (respuesta) => {
+      (response) => {
         const service = this.services.find(s => s._id === serviceId);
         if (service) {
-          service.likes = respuesta.likes;
-          service.liked = false; // Desmarcado como "Me gusta" localmente
-          sessionStorage.setItem(`liked_${service._id}`, 'false'); // Actualiza el almacenamiento local o de sesión
+          service.likes = response.likes;
+          service.liked = false;
+          sessionStorage.setItem(`liked_${service._id}`, 'false');
+          console.log(`Me gusta eliminado para el servicio ${service._id}`);
         }
       },
       (error) => {
         console.error('Error al quitar "Me gusta"', error);
+        // Puedes agregar una notificación o mensaje de error para informar al usuario sobre el problema.
       }
     );
   }
   
   
+  toggleLike(service: any): void {
+    // Verifica si el usuario está autenticado antes de permitir "Me gusta"
+    if (this.authService.loggedIn()) {
+      if (service.liked) {
+        // Si ya le diste "Me gusta", quítalo
+        this.apiService.removeLike(service._id).subscribe(() => {
+          service.likes--;
+          service.liked = false;
+          sessionStorage.setItem(`liked_${service._id}`, 'false');
+        });
+      } else {
+        // Si aún no le has dado "Me gusta", agrégalo
+        this.apiService.addLike(service._id).subscribe(() => {
+          service.likes++;
+          service.liked = true;
+          sessionStorage.setItem(`liked_${service._id}`, 'true');
+        });
+      }
+    } else {
+      alert('Por favor, inicia sesión para dar "Me gusta".');
+      this.router.navigate(['/signin']);
+    }
+  }
+
 
   search(): void {
     console.log('Término de búsqueda:', this.searchTerm);
-    // Llama al servicio para realizar la búsqueda
+  
     if (this.searchTerm.trim() !== '') {
       this.apiService.searchServices(this.searchTerm).subscribe(
         (response) => {
+          console.log('Respuesta de búsqueda:', response);
           this.services = response;
         },
         (error) => {
-     
           console.error('Error al realizar la búsqueda', error);
         }
       );
     } else {
-      // Si el término de búsqueda está vacío, obtén todos los servicios
+      console.log('Término de búsqueda vacío, obteniendo todos los servicios.');
       this.getServicesAll();
     }
   }
+  
   searchByCategory(): void {
     const selectedCategories = this.categories
       .filter((category) => category.checked)
