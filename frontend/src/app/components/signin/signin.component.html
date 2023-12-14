@@ -4,35 +4,60 @@
     <div class="form-container sign-up-container">
       <form action="#" (submit)="signUp()">
         <h1>Crear tu cuenta</h1>
+
         <div class="social-container">
           <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
-        <span>Utiliza tu correo electrónico para registrarte</span>
-        <input type="email" [(ngModel)]="user.email" name="email" class="form-control" placeholder="Email" required autofocus />
-        <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Contraseña" required />
-        <button type="submit"  (click)="toggleForm()">Registrarse</button>
+
+        <div class="form-group">
+          <label for="email">Correo Electrónico</label>
+          <input type="email" [(ngModel)]="user.email" name="email" id="email" class="form-control" placeholder="Email"
+            required autofocus />
+          <!-- Mostrar advertencia solo si se ha intentado enviar el formulario y se intenta registrar con un correo inválido -->
+          <div *ngIf="submitted && isSignUp && !isValidEmail(user.email)" class="error-message">Ingrese un correo
+            electrónico válido.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" [(ngModel)]="user.password" name="password" id="password" class="form-control"
+            placeholder="Contraseña" required />
+          <!-- Mostrar advertencia solo si se ha intentado enviar el formulario y se intenta registrar con una contraseña inválida -->
+          <div *ngIf="submitted && isSignUp && !isValidPassword(user.password)" class="error-message">La contraseña debe
+            tener al menos 6 caracteres.</div>
+        </div>
+
+        <button type="submit" (click)="toggleForm()">Registrarse</button>
       </form>
     </div>
 
     <div class="form-container sign-in-container">
       <form (submit)="signIn()">
-        <h1>Iniciar Sesion</h1>
+        <h1>Iniciar Sesión</h1>
         <div class="social-container">
           <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span>Introduce tu usuario creado</span>
+
+        <!-- Campos de entrada para correo electrónico y contraseña -->
         <input type="email" [(ngModel)]="user.email" name="email" class="form-control" placeholder="Email" required autofocus />
-        <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Password" required />
+        <input type="password" [(ngModel)]="user.password" name="password" class="form-control" placeholder="Password"
+          required />
+
+        <!-- Mostrar mensajes de error del inicio de sesión -->
+        <div *ngIf="submitted && loginErrorMessages.length > 0" class="error-message">
+          <p *ngFor="let error of loginErrorMessages">{{ error }}</p>
+        </div>
         <a href="#">¿Olvidaste tu contraseña?</a>
         <button>Login</button>
       </form>
     </div>
 
-    <div class="overlay-container" >
+    <div class="overlay-container">
       <div class="overlay">
         <div class="overlay-panel overlay-left">
           <h1>¡Bienvenido!</h1>
@@ -42,13 +67,9 @@
         <div class="overlay-panel overlay-right">
           <h1>Hola Bienvenido</h1>
           <p>Introduce tus datos personales</p>
-          <button class="ghost" id="signUp"  type="button" (click)="toggleForm()">Registrarse</button>
+          <button class="ghost" id="signUp" type="button" (click)="toggleForm()">Registrarse</button>
         </div>
       </div>
     </div>
   </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> 74c2318ddfb3b458afc2983956df0d8eeacc74c6
 </body>

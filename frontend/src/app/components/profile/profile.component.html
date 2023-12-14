@@ -1,73 +1,47 @@
-<<<<<<< HEAD
-<div *ngIf="user">
-  <h2>Perfil de {{ user.name || user.email }}</h2>
-
-  <!-- Mostrar el formulario de edición si está en modo de edición -->
-  <ng-container *ngIf="isEditMode; else viewMode">
-    <!-- Formulario de edición -->
-    <form (ngSubmit)="saveChanges()">
-      <label for="name">Nombre:</label>
-      <input type="text" id="name" name="name" [(ngModel)]="editedUser.name">
-
-      <label for="description">Descripción:</label>
-      <textarea id="description" name="description" [(ngModel)]="editedUser.description"></textarea>
-
-      <label for="image">Imagen URL:</label>
-      <input type="text" id="image" name="image" [(ngModel)]="editedUser.image">
-
-      <button type="submit">Guardar Cambios</button>
-    </form>
-  </ng-container>
-
-  <!-- Vista normal -->
-  <ng-template #viewMode>
-    <!-- Mostrar imagen si existe -->
-    <p *ngIf="user.image">
-      <img *ngIf="isEditMode && editedUser.image" [src]="editedUser.image" alt="Imagen de perfil">
-    </p>
-
-    <p *ngIf="user.description">Descripción: {{ user.description }}</p>
-
-    <p>Correo Electrónico: {{ user.email }}</p>
-
-    <!-- Agregar el contador de seguidores si existe la propiedad followers -->
-    <p *ngIf="user.followers">Seguidores: {{ user.followers?.length }}</p>
-
-    <!-- En el botón para activar el modo de edición -->
-    <button *ngIf="isOwnProfile && !isEditMode" (click)="enterEditMode()">Editar Perfil</button>
-
-    <button (click)="showFollowingUsers()">Ver Seguidores</button>
-
-    <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
-
-    <!-- Otras secciones del perfil aquí -->
-  </ng-template>
-=======
 <div class="text-center">
   <!-- Profile Image Section -->
   <div *ngIf="user" class="mb-4">
-    
-    <h2 class="mt-3">Perfil de {{ user.email }}</h2>
-  </div>
+    <h2 class="mt-3">Perfil de {{ user.name || user.email }}</h2>
 
-  <!-- Followers Section -->
-  <div class="mb-4">
-    <p *ngIf="user.followers && user.followers.length > 0">
-      Seguidores: {{ user.followers.length }}
+    <!-- Mostrar imagen si existe -->
+    <p *ngIf="user.image && !isEditMode">
+      <img [src]="user.image" alt="Imagen de perfil">
     </p>
+
+    <!-- Vista normal -->
+    <ng-container *ngIf="!isEditMode; else editMode">
+      <p *ngIf="user.description">Descripción: {{ user.description }}</p>
+      <p>Correo Electrónico: {{ user.email }}</p>
+      <!-- Otros campos del perfil -->
+
+      <p *ngIf="user.followers && user.followers.length > 0">
+        Seguidores: {{ user.followers.length }}
+      </p>
+
+      <!-- Botón para activar el modo de edición -->
+      <button *ngIf="isOwnProfile" (click)="enterEditMode()">Editar Perfil</button>
+      <button (click)="showFollowingUsers()">Ver Seguidores</button>
+      <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
+    </ng-container>
+
+    <!-- Modo de Edición -->
+    <ng-template #editMode>
+      <!-- Formulario de edición -->
+      <form (ngSubmit)="saveChanges()">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" [(ngModel)]="editedUser.name">
+
+        <label for="description">Descripción:</label>
+        <textarea id="description" name="description" [(ngModel)]="editedUser.description"></textarea>
+
+        <label for="image">Imagen URL:</label>
+        <input type="text" id="image" name="image" [(ngModel)]="editedUser.image">
+
+        <button type="submit">Guardar Cambios</button>
+      </form>
+    </ng-template>
   </div>
 
-  <!-- Show Following Users Button -->
-  <div class="mb-4">
-    <button (click)="showFollowingUsers()">Ver Seguidores</button>
-  </div>
+  <!-- Otras secciones del perfil aquí -->
 
-  <!-- Suggested Users Button -->
-  <div class="mb-4">
-    <button *ngIf="canFollowUser(user._id)" class="btn btn-primary" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
-  </div>
-
-  <!-- Other sections of the profile can be added here -->
-
->>>>>>> 74c2318ddfb3b458afc2983956df0d8eeacc74c6
 </div>
