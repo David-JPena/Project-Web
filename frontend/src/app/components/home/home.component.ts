@@ -14,7 +14,13 @@ export class HomeComponent implements OnInit {
   services: any[] = [];
   searchTerm: string = '';
   selectedCategory: string = '';
-  categories: string[] = ['Desayuno', 'Almuerzo', 'Cena', 'Vegetariana', 'Postres'];
+  categories: { name: string; checked: boolean }[] = [
+    { name: 'Desayuno', checked: false },
+    { name: 'Almuerzo', checked: false },
+    { name: 'Cena', checked: false },
+    { name: 'Vegetariana', checked: false },
+    { name: 'Postres', checked: false },
+  ];
 
   constructor(private apiService: TasksService, private router: Router) {}
 
@@ -114,8 +120,12 @@ export class HomeComponent implements OnInit {
     }
   }
   searchByCategory(): void {
-    if (this.selectedCategory.trim() !== '') {
-      this.apiService.searchByCategory(this.selectedCategory).subscribe(
+    const selectedCategories = this.categories
+      .filter((category) => category.checked)
+      .map((category) => category.name);
+
+    if (selectedCategories.length > 0) {
+      this.apiService.searchByCategory(selectedCategories.join(',')).subscribe(
         (response) => {
           this.services = response;
         },
@@ -127,6 +137,7 @@ export class HomeComponent implements OnInit {
       this.getAllServices();
     }
   }
+  
   selectCategory(category: string): void {
     this.selectedCategory = category;
     this.searchByCategory();  // Llama a la función de búsqueda con la nueva categoría seleccionada
