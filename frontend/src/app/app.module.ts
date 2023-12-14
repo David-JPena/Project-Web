@@ -21,6 +21,7 @@ import { FooderComponent } from './components/fooder/fooder.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { SuggestedUsersComponent } from './components/suggested-users/suggested-users.component';
+import { FollowingUsersComponent } from './components/following-users/following-users.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SuggestedUsersComponent } from './components/suggested-users/suggested-
     ProfileComponent,
     ProfileDetailsComponent,
     SuggestedUsersComponent,
+    FollowingUsersComponent,
 
   ],
   imports: [

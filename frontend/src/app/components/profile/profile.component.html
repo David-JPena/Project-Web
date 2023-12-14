@@ -1,7 +1,15 @@
 <div *ngIf="user">
   <h2>Perfil de {{ user.email }}</h2>
-  <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()">Personas que quizas conoscan</button>
+
+  <!-- Agregar el contador de seguidores si existe la propiedad followers -->
+  <p *ngIf="user.followers">
+    Seguidores: {{ user.followers.length }}
+  </p>
+
+  <!-- Botón para mostrar los usuarios seguidos -->
+  <button (click)="showFollowingUsers()">Ver Seguidores</button>
+
+  <button *ngIf="canFollowUser(user._id)" (click)="navigateToSuggestedUsers()">Personas que quizás conozcan</button>
 
   <!-- Otras secciones del perfil aquí -->
-
 </div>

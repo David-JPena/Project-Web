@@ -190,13 +190,44 @@ router.get('/followers', verifyToken, async (req, res) => {
 });
 
 // Ruta para obtener todos los usuarios (públicos)
-router.get('/all-users', async (req, res) => {
+router.get('/all-users', verifyToken, async (req, res) => {
     try {
-        const allUsers = await User.find().select('email');
+        const currentUser = await User.findById(req.userId);
+
+        // Obtén la lista de todos los usuarios excluyendo al usuario actual y aquellos a los que ya sigue
+        const usersToDisplay = await User.find({
+            _id: { $ne: req.userId, $nin: currentUser.following }
+        }).select('email');
+
+        // Obtén la lista de usuarios que el usuario actual sigue y agrégales al final
+        const usersAlreadyFollowing = await User.find({
+            _id: { $in: currentUser.following }
+        }).select('email');
+
+        // Combina ambas listas para mostrar primero los usuarios que puede seguir y al final los que ya sigue
+        const allUsers = usersToDisplay.concat(usersAlreadyFollowing);
+
         res.status(200).json({ users: allUsers });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al obtener todos los usuarios' });
+    }
+});
+
+// Ruta para obtener los usuarios seguidos por el usuario actual
+router.get('/following', verifyToken, async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.userId);
+
+        // Obtén la lista de usuarios que el usuario actual sigue
+        const followingUsers = await User.find({
+            _id: { $in: currentUser.following }
+        }).select('email');
+
+        res.status(200).json({ users: followingUsers });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener usuarios seguidos' });
     }
 });
 

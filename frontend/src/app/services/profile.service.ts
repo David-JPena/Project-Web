@@ -39,6 +39,17 @@ export class ProfileService {
       );
   }
 
+  getUserProfileDetails(): Observable<any> {
+    const url = `${this.apiUrl}/profile`;
+    return this.http.get<any>(url)
+      .pipe(
+        catchError(error => {
+          console.error('Error al obtener detalles del perfil:', error);
+          throw error;
+        })
+      );
+  }
+
   getUsersToFollow(): Observable<any> {
     const url = `${this.apiUrl}/followers`;
     return this.http.get<any>(url)

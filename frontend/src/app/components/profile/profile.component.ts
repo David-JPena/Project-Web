@@ -22,10 +22,15 @@ export class ProfileComponent implements OnInit {
 
   // Cambia la parte relevante de tu ProfileComponent
   ngOnInit(): void {
-    this.authService.getProfile().subscribe(
+    this.profileService.getUserProfileDetails().subscribe(
       (res: any) => {
         this.user = res;
         this.isOwnProfile = this.authService.getUserId() === this.user._id;
+
+        // Verifica si la propiedad 'followers' existe antes de usarla
+        if (this.user.followers) {
+          console.log('Seguidores: ', this.user.followers.length);
+        }
       },
       (err: any) => console.log(err)
     );
@@ -58,6 +63,11 @@ export class ProfileComponent implements OnInit {
 
   navigateToSuggestedUsers() {
     this.router.navigate(['/suggested-users']);
+  }
+
+  showFollowingUsers() {
+    // Redirigir a la página que muestra los usuarios seguidos
+    this.router.navigate(['/following-users']);
   }
 
 }
