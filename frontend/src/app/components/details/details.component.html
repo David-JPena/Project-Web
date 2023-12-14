@@ -63,36 +63,16 @@
             <h5>Comentarios</h5>
 
             <div class="card">
-<<<<<<< HEAD
               <div class="ms-2 mt-2 ">
                 <div *ngFor="let comment of comments" class="list-group-item pt-2">
                   <div class="d-flex w-100 justify-content-between">
-                    <h6 class="mb-1">{{ user.email }}</h6>
+                    <h6 class="mb-1">{{ user.name }}</h6>
                     <small class="text-muted pe-2">{{ comment.date | date : "dd-MM-yyyy" }}</small>
                   </div>
                   <p class="mb-1">{{ comment.text }}</p>
                 </div>
               </div>
             </div>
-=======
-
-              <ul class="list-group">
-
-                <li *ngFor="let comment of comments" class="list-group-item">
-
-                    <strong>{{ user.email }}</strong>
-                    <p>{{comment.text}}</p>
-                    <div>
-                    <small>Fecha: {{comment.date | date : "dd-MM-yyyy"}}</small>
-                  </div>
-
-                </li>
-
-              </ul>
-
-            </div>
-
->>>>>>> dd7ebc9f3d8b95f18d83a1fd09280e53f9f90577
           </div>
         </div>
       </div>
@@ -113,7 +93,14 @@
               <h2 class="card-title">Ingredientes</h2>
               <ul class="list-unstyled">
                 <li *ngFor="let ingredient of service.ingredients; let i = index">
-                  {{ i + 1 }}. {{ ingredient }}
+                  <div class="row mb-2">
+                    <div class="col-1">
+                      <div class="circle blue-bg">{{ i + 1 }}</div>
+                    </div>
+                    <div class="col">
+                      <span>{{ ingredient.trim() }}</span>
+                    </div>
+                  </div>
                 </li>
               </ul>
             </div>

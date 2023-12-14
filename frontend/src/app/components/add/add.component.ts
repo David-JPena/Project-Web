@@ -20,7 +20,6 @@ export class AddComponent {
   formData: any = {
     name: '',
     description: '',
-    // price: null,
     ingredients: [], // Inicializado con un ingrediente vacío
     steps: [] ,
     categories: "",
@@ -34,21 +33,31 @@ export class AddComponent {
     const file = event.target.files[0];
     this.formData.image = file;
   }
-
   onSubmit(): void {
     const formData = new FormData();
     formData.append('name', this.formData.name);
     formData.append('description', this.formData.description);
-    // formData.append('price', this.formData.price.toString());
-    formData.append('ingredients', this.formData.ingredients.join(','));// Convertir a cadena JSON
+    formData.append('ingredients', this.formData.ingredients.join(','));
     formData.append('steps', this.formData.steps.join(','));
     formData.append('categories', this.formData.categories);
     formData.append('file', this.formData.image);
     formData.append('origin', this.formData.origin);
-
+  
     this.serviceService.createService(formData).subscribe(response => {
       console.log(response);
+  
       // Realiza cualquier lógica adicional después de registrar el servicio
+  
+      // Limpia los campos después de enviar la receta
+      this.formData = {
+        name: '',
+        description: '',
+        ingredients: [],
+        steps: [],
+        categories: '',
+        image: null,
+        origin: '',
+      };
     });
   }
 

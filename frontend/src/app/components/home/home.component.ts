@@ -15,8 +15,7 @@ export class HomeComponent implements OnInit {
   services: any[] = [];
   searchTerm: string = '';
   selectedCategory: string = '';
-  isHovered: boolean = false;
-  
+
   categories: { name: string; checked: boolean }[] = [
     { name: 'Desayuno', checked: false },
     { name: 'Almuerzo', checked: false },
@@ -147,24 +146,32 @@ export class HomeComponent implements OnInit {
     }
   }
   
-  searchByCategory(): void {
-    const selectedCategories = this.categories
-      .filter((category) => category.checked)
-      .map((category) => category.name);
+searchByCategory(): void {
+  const selectedCategories = this.categories
+    .filter((category) => category.checked)
+    .map((category) => category.name);
 
-    if (selectedCategories.length > 0) {
-      this.apiService.searchByCategory(selectedCategories.join(',')).subscribe(
-        (response) => {
+  if (selectedCategories.length > 0) {
+    this.apiService.searchByCategory(selectedCategories.join(',')).subscribe(
+      (response) => {
+        if (response.length > 0) {
           this.services = response;
-        },
-        (error) => {
-          console.error('Error al realizar la búsqueda por categoría', error);
+        } else {
+          // Si no hay recetas encontradas, puedes asignar un mensaje o manejarlo según tus necesidades.
+          this.services = [];
+          console.log('No se encontraron recetas con el nombre buscado.');
         }
-      );
-    } else {
-      this.getServicesAll();
-    }
+      },
+      (error) => {
+        console.error('Error al realizar la búsqueda por categoría', error);
+      }
+    );
+  } else {
+    this.getServicesAll();
   }
+}
+
+  
   
   selectCategory(category: string): void {
     this.selectedCategory = category;

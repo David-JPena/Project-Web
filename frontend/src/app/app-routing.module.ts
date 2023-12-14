@@ -21,7 +21,7 @@ import { EditPerfilComponent } from './components/edit-perfil/edit-perfil.compon
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/tasks',
+    redirectTo: '/home',
     pathMatch: 'full'
   },
   {

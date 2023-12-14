@@ -12,11 +12,12 @@ router.get('/', (req, res) => res.send('Hello World'));
 
 // Ruta para registrar un nuevo usuario (signup)
 router.post('/signup', async (req, res) => {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
 
     try {
         // Creando un nuevo usuario con la información proporcionada en la solicitud
         const newUser = new User({
+            name,
             email,
             password
         });

@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // URI de conexión a MongoDB, que incluye el nombre de usuario, la contraseña y la información del clúster
-const MONGODB_URI = 'mongodb+srv://Jordi:HynhJ8CvBlNStugn@cluster0.lmdhbvn.mongodb.net/';
+const MONGODB_URI = 'mongodb+srv://Jordi:HynhJ8CvBlNStugn@cluster0.lmdhbvn.mongodb.net/recipe-projsect';
 
 // Función asíncrona para conectarse a MongoDB
 const connectDB = async () => {
