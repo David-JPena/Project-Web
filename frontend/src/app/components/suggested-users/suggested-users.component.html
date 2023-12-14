@@ -1,12 +1,18 @@
-<div *ngIf="usersToFollow && usersToFollow.length > 0">
-  <p>Puedes seguir a estos usuarios:</p>
-  <ul>
-    <li *ngFor="let userToFollow of usersToFollow">
-      {{ userToFollow.email }}
-      <button (click)="followOrUnfollowUser(userToFollow)">
-        {{ userToFollow.isFollowingStatus ? 'Dejar de seguir' : 'Seguir' }}
-      </button>
-      <button (click)="goToProfile(userToFollow._id)">Ver Perfil</button>
-    </li>
-  </ul>
+<div *ngIf="usersToFollow && usersToFollow.length > 0" class="container">
+  <div class="card" style="margin-left: 130px; margin-right: 130px;">
+    <div class="card-header text-center">
+      <h5 class="card-title mb-3" style="margin-top: 10px;">Puedes seguir a estos usuarios:</h5>
+    </div>
+    <ul class="list-group list-group-flush" style="max-width: 750px; margin: 0 auto;">
+      <li *ngFor="let userToFollow of usersToFollow" class="list-group-item d-flex justify-content-between align-items-center mb-3">
+        <span>{{ userToFollow.email }}</span>
+        <div>
+          <button class="btn btn-primary btn-sm mx-3" [ngClass]="{'btn-danger': userToFollow.isFollowingStatus}" (click)="followOrUnfollowUser(userToFollow)">
+            {{ userToFollow.isFollowingStatus ? 'Dejar de seguir' : 'Seguir' }}
+          </button>
+          <button class="btn btn-secondary btn-sm mx-1" (click)="goToProfile(userToFollow._id)">Ver Perfil</button>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
