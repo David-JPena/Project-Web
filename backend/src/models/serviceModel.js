@@ -50,22 +50,6 @@ const serviceSchema = new Schema({
 
     likesBy: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 
-    // comments: [{
-    //     user: {
-    //         type: Schema.Types.ObjectId,
-    //         ref: 'User',
-    //         required: true
-    //     },
-    //     text: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     date: {
-    //         type: Date,
-    //         default: Date.now,
-    //         required: false // Hacer la fecha de comentario opcional
-    //     }
-    // }],
 
     comments: [
         {
